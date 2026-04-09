@@ -1,0 +1,222 @@
+import sys
+import os
+import sqlite3
+from flask import Flask, jsonify, request, send_from_directory
+
+# Añadir directorio raíz del proyecto al path para importar bot_ruleta
+# __file__ = bot_ruleta/dashboard/app.py
+# dirname = bot_ruleta/dashboard
+# dirname(dirname) = bot_ruleta
+# dirname(dirname(dirname)) = PROYECTO ROOT
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from bot_ruleta.config import TABLES, REDS, load_credentials
+import bot_ruleta.logic as bt_logic
+
+app = Flask(__name__, static_url_path='', static_folder='static')
+
+# BD en bot_ruleta/data/ruleta.db
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "ruleta.db")
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def calcular_delays(table_name, limit=500):
+    """Calcula los delays de docenas y columnas para una tabla dada (USANDO LOGIC COMPARTIDA)."""
+    try:
+        conn = get_db_connection()
+        cursor = conn.execute(
+            f"SELECT numero, color, timestamp FROM {table_name} ORDER BY id DESC LIMIT ?", (limit,)
+        )
+        rows = cursor.fetchall()
+        conn.close()
+    except Exception:
+        return None, []
+
+    numeros = [dict(row) for row in rows]
+    
+    # Usar lógica centralizada
+    delays = bt_logic.compute_delays(numeros)
+
+    return delays, numeros
+
+
+# ─── RUTAS ────────────────────────────────────────────────────────────
+
+@app.route('/')
+def serve_index():
+    return send_from_directory('static', 'index.html')
+
+
+@app.route('/mesa')
+def serve_mesa():
+    return send_from_directory('static', 'mesa.html')
+
+
+@app.route('/analisis')
+def serve_analisis():
+    return send_from_directory('static', 'analisis.html')
+
+
+@app.route('/api/mesas')
+def get_mesas():
+    return jsonify([{"name": t["name"], "value": t["table_name"]} for t in TABLES])
+
+
+@app.route('/api/overview')
+def get_overview():
+    """Retorna un resumen rápido de TODAS las mesas: delay máximo y alertas."""
+    from datetime import datetime
+    
+    # Cargar threshold dinámico
+    _, _, _, _, threshold, _ = load_credentials()
+    
+    result = []
+    for t in TABLES:
+        tn = t["table_name"]
+        delays, nums = calcular_delays(tn, limit=100)
+        if delays is None:
+            continue
+
+        max_delay = max(delays.values())
+        alertas = [k for k, v in delays.items() if v >= threshold]
+
+        # Nombre bonito de la zona con mayor delay
+        max_zone = max(delays, key=delays.get)
+        zone_labels = {
+            "docena_1": "1ª Docena", "docena_2": "2ª Docena", "docena_3": "3ª Docena",
+            "columna_1": "Col. 1", "columna_2": "Col. 2", "columna_3": "Col. 3"
+        }
+        
+        # Calcular tiempo desde la última actualización
+        last_update_seconds = 999999
+        if nums and "timestamp" in nums[0]:
+            try:
+                import time
+                from datetime import datetime
+                last_ts = datetime.strptime(nums[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
+                last_ts_seconds = time.mktime(last_ts.timetuple())
+                last_update_seconds = time.time() - last_ts_seconds
+            except Exception as e:
+                pass
+
+        result.append({
+            "name": t["name"],
+            "table_name": tn,
+            "max_delay": max_delay,
+            "max_zone": zone_labels.get(max_zone, max_zone),
+            "delays": delays,
+            "alertas": alertas,
+            "ultimo": nums[0]["numero"] if nums else None,
+            "ultimo_color": nums[0].get("color", "Green") if nums else None,  # Fix for db.py tuple change
+            "last_10": [{"val": n["numero"], "col": n.get("color", "Green")} for n in nums[:10]] if nums else [],
+            "last_update_seconds": last_update_seconds
+        })
+
+    # Estructura: { threshold: 10, tables: [...] }
+    return jsonify({
+        "threshold": threshold,
+        "tables": result
+    })
+
+
+@app.route('/api/data')
+def get_data():
+    from datetime import datetime
+    table_name = request.args.get('mesa', 'ruleta_latina')
+
+    # Validar tabla
+    if not any(t["table_name"] == table_name for t in TABLES):
+        return jsonify({"error": "Tabla no válida"}), 400
+
+    delays, numeros = calcular_delays(table_name, limit=100)
+    if delays is None:
+        return jsonify({"error": "Error leyendo BD"}), 500
+
+    # Cargar threshold dinámico
+    _, _, _, _, threshold, _ = load_credentials()
+
+    alertas = [k for k, v in delays.items() if v >= threshold]
+    
+    # Calcular edad de los datos
+    last_update_seconds = 999999
+    if numeros and "timestamp" in numeros[0]:
+        try:
+            from datetime import datetime
+            import time
+            last_ts = datetime.strptime(numeros[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
+            last_ts_seconds = time.mktime(last_ts.timetuple())
+            last_update_seconds = time.time() - last_ts_seconds
+        except Exception as e:
+            print(f"Error parsing date {numeros[0]['timestamp']}: {e}")
+
+    return jsonify({
+        "mesa": table_name,
+        "ultimos": numeros[:20],
+        "delays": delays,
+        "alertas": alertas,
+        "threshold": threshold,
+        "last_update_seconds": last_update_seconds
+    })
+
+
+@app.route('/api/backtest')
+def get_backtest():
+    table_name = request.args.get('mesa', 'ruleta_latina')
+    if not any(t["table_name"] == table_name for t in TABLES):
+        return jsonify({"error": "Tabla no válida"}), 400
+
+    _, _, _, _, threshold, _ = load_credentials()
+    
+    # 1. Sincronizar (procesar giros nuevos)
+    try:
+        bt_logic.sync_backtest(table_name, threshold)
+    except Exception as e:
+        print(f"Error en sync_backtest: {e}")
+        
+    # 2. Leer historial
+    try:
+        conn = get_db_connection()
+        cursor = conn.execute(
+            "SELECT zone_name, start_time, end_time, max_delay FROM backtest_history WHERE table_name = ? ORDER BY id DESC LIMIT 100",
+            (table_name,)
+        )
+        rows = cursor.fetchall()
+        conn.close()
+        
+        history = [dict(row) for row in rows]
+        return jsonify({"mesa": table_name, "history": history})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analisis_global')
+def get_analisis_global():
+    _, _, _, _, threshold, _ = load_credentials()
+    
+    # 1. Sincronizar TODAS las mesas para asegurar datos frescos
+    try:
+        for t in TABLES:
+            bt_logic.sync_backtest(t["table_name"], threshold)
+    except Exception as e:
+        print(f"Error en sync_backtest global: {e}")
+        
+    # 2. Extraer todo el historial completo
+    try:
+        conn = get_db_connection()
+        cursor = conn.execute(
+            "SELECT table_name, zone_name, start_time, end_time, max_delay FROM backtest_history ORDER BY id DESC"
+        )
+        rows = cursor.fetchall()
+        conn.close()
+        
+        history = [dict(row) for row in rows]
+        return jsonify({"history": history, "threshold": threshold})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5050, host='0.0.0.0')

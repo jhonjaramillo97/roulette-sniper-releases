@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.90, maximum-scale=0.90, user-scalable=no">
+    <title>Roulette Sniper - Overview</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- PANTALLA DE CARGA INICIAL -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner-container">
+            <div class="loader-ring"></div>
+            <div class="loader-core"></div>
+        </div>
+        <h2 style="margin-top: 2rem; font-size: 1.5rem; letter-spacing: 0.05em;">Conectando al Bot...</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.9rem;" id="loading-text">Esperando
+            datos frescos de la ruleta (El bot está escaneando las mesas)</p>
+        <button id="bypass-loader" class="btn-bypass">Ver datos guardados localmente</button>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="overview-header">
+        <h1>Roulette <span class="accent">Sniper</span></h1>
+        <p>Monitoreo en tiempo real — Click en una mesa para ver detalles</p>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+            <a href="/analisis" class="btn-analisis"
+                style="display:inline-block; padding:0.5rem 1.5rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-primary); text-decoration:none; border-radius:8px; font-weight:600; transition:0.3s;">📊
+                Análisis Global</a>
+
+            <button id="btn-view-toggle" class="btn-view-toggle" title="Cambiar Vista"
+                style="display:inline-flex; align-items:center; justify-content:center; padding:0.5rem 1rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-primary); border-radius:8px; font-weight:600; cursor:pointer; transition:0.3s;">
+                <span class="icon-grid" style="display:none;">🔲 Cuadrícula</span>
+                <span class="icon-list">📋 Lista</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="overview-grid" id="overview-grid">
+        <!-- Cards generadas por JS -->
+        <div class="table-card" style="display:flex;align-items:center;justify-content:center;min-height:180px;">
+            <span style="color:var(--text-secondary)">Cargando mesas...</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,932 @@
+:root {
+    --bg-color: #0d0d12;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --accent: #4f46e5;
+
+    --color-safe: #10b981;
+    /* Green */
+    --color-warn: #f59e0b;
+    /* Orange */
+    --color-danger: #ef4444;
+    /* Red */
+    --color-critical: #ff0000;
+    /* Bright Red */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.1), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* --- LOADING OVERLAY --- */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(13, 13, 18, 0.98);
+    /* Almost completely opaque dark */
+    backdrop-filter: blur(15px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.spinner-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.loader-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--accent);
+    border-right-color: var(--color-safe);
+    animation: spin 1.5s linear infinite;
+}
+
+.loader-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 40%;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--accent);
+    animation: pulseCore 2s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseCore {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(13, 13, 18, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-safe);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--color-safe);
+}
+
+#status-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.header-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+select {
+    background: var(--card-bg);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.btn-icon:hover {
+    opacity: 1;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.grid-section {
+    margin-bottom: 3rem;
+}
+
+.grid-section h2 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card-header {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.counter-value {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 1rem 0;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: auto;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-safe);
+    transition: width 0.5s ease-out, background 0.3s;
+    border-radius: 3px;
+}
+
+/* ALERT STYLES */
+.alert-active {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    animation: pulse 1.5s infinite;
+}
+
+.alert-active .counter-value {
+    color: var(--color-danger);
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+
+    70% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.history-strip {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.history-item {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.num-red {
+    background: var(--color-danger);
+}
+
+.num-black {
+    background: #333;
+}
+
+.num-green {
+    background: var(--color-safe);
+}
+
+/* Back link */
+.back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+/* --- BETTING TABLE LAYOUT (Detail) --- */
+.betting-table-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /* 4 columnas */
+    gap: 1rem;
+    padding: 1rem 0;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 400px;
+    /* Para dar altura a las barras */
+}
+
+.dozen-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.columns-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+}
+
+.column-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ajustes Visuales para layout compacto */
+.counter-value-small {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1;
+    margin: 0.5rem 0;
+}
+
+.vertical-bar {
+    height: 10px;
+    /* Horizontal bar at bottom of dozen card */
+    margin-top: auto;
+}
+
+/* Si quisieramos barras verticales reales, necesitaríamos rotar o cambiar lógica. 
+   Por ahora mantenemos barra abajo pero la tarjeta es alta */
+
+
+/* --- OVERVIEW CARD GRID (Index) --- */
+.tc-delays {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 1rem;
+    aspect-ratio: 4/3;
+    /* Mantener proporción */
+}
+
+/* Asignación de áreas en la tarjeta pequeña */
+.od-d1 {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+}
+
+.od-d2 {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+}
+
+.od-d3 {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+}
+
+.od-c3 {
+    grid-column: 4;
+    grid-row: 1;
+}
+
+.od-c2 {
+    grid-column: 4;
+    grid-row: 2;
+}
+
+.od-c1 {
+    grid-column: 4;
+    grid-row: 3;
+}
+
+.delay-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    height: 100%;
+    transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+    .betting-table-layout {
+        grid-template-columns: 1fr;
+        /* Stack en móvil muy angosto */
+        min-height: auto;
+    }
+
+    .columns-stack {
+        flex-direction: row;
+        /* En móvil las columnas pasan a fila abajo */
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERVIEW STYLES — Full-width, Premium, Proportional
+   ═══════════════════════════════════════════════════════════════ */
+
+.overview-header {
+    text-align: center;
+    padding: 1rem 2rem 0.2rem;
+}
+
+.overview-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.1rem;
+}
+
+.overview-header p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* ── Grid: Adaptable para vista de lista o columnas ── */
+.overview-grid {
+    display: grid;
+    /* Para vista movil, 1 fr es ideal para lista */
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    padding: 0.5rem 2vw;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+/* ── MODO LISTA (Por defecto) ── */
+/* Comportamiento acordeon definido abajo */
+
+/* ── MODO CUADRÍCULA (Grid Clásico) ── */
+.overview-grid.grid-view {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    max-width: 100%;
+    /* Aprovechar toda la pantalla */
+}
+
+.overview-grid.grid-view .table-card.list-item {
+    padding: 0.8rem 1.2rem;
+    min-height: 100%;
+    height: auto;
+    justify-content: flex-start;
+}
+
+.overview-grid.grid-view .table-card.list-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.overview-grid.grid-view .accordion-header {
+    padding: 0;
+    margin-bottom: 0.4rem;
+}
+
+.overview-grid.grid-view .chevron {
+    display: none;
+    /* No hay "expandir" en tarjeta clásica */
+}
+
+.overview-grid.grid-view .accordion-body {
+    display: flex !important;
+    flex-direction: column;
+    padding: 0;
+    border: none;
+    margin-top: 0;
+    flex: 1;
+}
+
+/* ── Tarjeta individual (Estructura Base) ── */
+.table-card.list-item {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-card.list-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    gap: 0.5rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.accordion-header .tc-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tc-freshness {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    margin-left: 0.3rem;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tc-freshness::before {
+    content: "⏱️ ";
+    font-size: 0.70rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.chevron {
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-left: 0.5rem;
+}
+
+.accordion-body {
+    display: none;
+    padding: 0 1.2rem 1rem 1.2rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.05);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+}
+
+/* Cuando se le da clic (clase expanded en row) */
+.table-card.expanded .accordion-body {
+    display: block;
+    animation: fadeIn 0.3s forwards;
+}
+
+.table-card.expanded .accordion-header .tc-name {
+    white-space: normal;
+    overflow: visible;
+}
+
+.table-card.expanded .chevron {
+    transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-detalles {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.25rem 0.6rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-detalles:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+}
+
+.status-badge.safe {
+    color: var(--color-safe);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.status-badge.warn {
+    color: var(--color-warn);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.table-card .tc-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Mini-grid de delays (layout paño ruleta) ── */
+.table-card .tc-delays {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.85fr;
+    grid-template-rows: repeat(3, auto);
+    gap: 4px;
+    margin-bottom: 0.3rem;
+}
+
+.overview-grid.grid-view .tc-delays {
+    min-height: 120px;
+    flex: 1 1 auto;
+}
+
+/* ── Chip de delay ── */
+.table-card .delay-chip {
+    padding: 0.2rem 0.1rem;
+    /* Compacto */
+    border-radius: 6px;
+}
+
+.delay-chip .chip-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+    display: block;
+    font-variant-numeric: tabular-nums;
+}
+
+.delay-chip .chip-label {
+    font-size: 0.6rem;
+    margin-top: 2px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ── Footer de tarjeta ── */
+.table-card .tc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 0.5rem;
+    margin-top: auto;
+    gap: 0.5rem;
+}
+
+.tc-footer .last-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+}
+
+/* ── Alert badge ── */
+.alert-badge {
+    background: var(--color-danger);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    animation: pulse 1.5s infinite;
+}
+
+/* ── Color states ── */
+.chip-safe .chip-value {
+    color: var(--color-safe);
+}
+
+.chip-warn .chip-value {
+    color: var(--color-warn);
+}
+
+.chip-danger .chip-value {
+    color: var(--color-danger);
+}
+
+.chip-critical {
+    background: rgba(255, 0, 0, 0.15) !important;
+    border: 1px solid rgba(255, 0, 0, 0.25);
+    animation: chipPulse 1.5s infinite;
+}
+
+.chip-critical .chip-value {
+    color: var(--color-critical);
+}
+
+@keyframes chipPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 8px 1px rgba(255, 0, 0, 0.2);
+    }
+}
+
+.table-card.has-alert {
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
+}
+
+/* ── Mini History in Footer (New) ── */
+.history-mini-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    /* Push to right */
+}
+
+.mini-chip {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    /* border: 1px solid rgba(255,255,255,0.1); */
+}
+
+/* --- BACKTESTING TABLE --- */
+.backtest-section {
+    margin-top: 3rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.backtest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.backtest-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.backtest-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.backtest-table th {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.backtest-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.backtest-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.backtest-table .max-delay-col {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.delay-extreme {
+    color: var(--color-danger);
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.delay-high {
+    color: var(--color-warn);
+}
+
+.loading-td {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 2rem !important;
+}

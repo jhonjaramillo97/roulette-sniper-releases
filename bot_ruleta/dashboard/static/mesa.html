@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.90, maximum-scale=0.90, user-scalable=no">
+    <title>Roulette Sniper - 12 Trigger System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <header>
+        <div class="header-left">
+            <a href="/" class="back-link">← Volver</a>
+            <h1>Roulette <span class="accent">Sniper</span></h1>
+            <div class="status-dot"></div> <span id="status-text">Conectado</span>
+            <a href="/analisis" class="btn-analisis"
+                style="margin-left: 1rem; padding:0.3rem 0.8rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-primary); text-decoration:none; border-radius:8px; font-weight:600; font-size: 0.9rem; transition:0.3s;">📊
+                Análisis Global</a>
+        </div>
+        <div class="header-right">
+            <select id="table-select">
+                <option value="stake_roulette">Cargando mesas...</option>
+            </select>
+            <button id="sound-toggle" class="btn-icon">🔊</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Layout solicitado: 3 Dozenas verticales + 1 Columna de Columnas a la derecha -->
+        <div class="betting-table-layout">
+
+            <!-- Docena 1 -->
+            <div class="card dozen-card" id="card-docena_1">
+                <div class="card-header">1ª Doc (1-12)</div>
+                <div class="counter-value" id="val-docena_1">--</div>
+                <div class="progress-bar vertical-bar">
+                    <div class="progress-fill" id="prog-docena_1"></div>
+                </div>
+            </div>
+
+            <!-- Docena 2 -->
+            <div class="card dozen-card" id="card-docena_2">
+                <div class="card-header">2ª Doc (13-24)</div>
+                <div class="counter-value" id="val-docena_2">--</div>
+                <div class="progress-bar vertical-bar">
+                    <div class="progress-fill" id="prog-docena_2"></div>
+                </div>
+            </div>
+
+            <!-- Docena 3 -->
+            <div class="card dozen-card" id="card-docena_3">
+                <div class="card-header">3ª Doc (25-36)</div>
+                <div class="counter-value" id="val-docena_3">--</div>
+                <div class="progress-bar vertical-bar">
+                    <div class="progress-fill" id="prog-docena_3"></div>
+                </div>
+            </div>
+
+            <!-- Grupo Columnas (Apiladas C3, C2, C1) -->
+            <div class="columns-stack">
+                <div class="card column-card" id="card-columna_3">
+                    <div class="card-header">Col 3 (3,6...)</div>
+                    <div class="counter-value-small" id="val-columna_3">--</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="prog-columna_3"></div>
+                    </div>
+                </div>
+                <div class="card column-card" id="card-columna_2">
+                    <div class="card-header">Col 2 (2,5...)</div>
+                    <div class="counter-value-small" id="val-columna_2">--</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="prog-columna_2"></div>
+                    </div>
+                </div>
+                <div class="card column-card" id="card-columna_1">
+                    <div class="card-header">Col 1 (1,4...)</div>
+                    <div class="counter-value-small" id="val-columna_1">--</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="prog-columna_1"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Backtesting Section (Historial de Señales) -->
+        <section class="backtest-section">
+            <div class="backtest-header">
+                <h2>📜 Historial de Señales Detectadas</h2>
+            </div>
+            <div class="table-container">
+                <table class="backtest-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha Inicio</th>
+                            <th>Zona</th>
+                            <th>Delay alcanzado (Pico)</th>
+                            <th>Ganó en</th>
+                        </tr>
+                    </thead>
+                    <tbody id="backtest-body">
+                        <tr>
+                            <td colspan="4" class="loading-td">Cargando historial...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="history-label">HISTORIAL RECIENTE</div>
+        <div class="history-strip" id="history-container">
+            <!-- Items generados por JS -->
+        </div>
+    </footer>
+
+    <script src="mesa.js"></script>
+</body>
+
+</html>
