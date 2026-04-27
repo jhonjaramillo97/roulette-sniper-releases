@@ -1,0 +1,368 @@
+[2026-04-26 21:07:52.734] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:52.734] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:07:51
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:07:52.735] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.1 GB (80.1% en uso)
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:07:52.736] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:07:52.737] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:55.789] [INFO    ] [bot.launcher] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 21:07:58.034] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:07:58.034] [INFO    ] [bot.run] 🚀 Bot de Ruleta iniciando...
+[2026-04-26 21:07:58.034] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:07:58.818] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:58.818] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:07:58.818] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:07:58
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.1 GB (80.1% en uso)
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:07:58.819] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:07:58.820] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:07:58.821] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:07:58.821] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:07:58.821] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:07:58.821] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:58.940] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:07:58.940] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 21:07:59.177] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:59.177] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:07:59.177] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:07:58
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.1 GB (80.2% en uso)
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:07:59.178] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:07:59.179] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:07:59.180] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:07:59.180] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:07:59.180] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:07:59.180] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:07:59.180] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 21:07:59.180] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 21:07:59.180] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 21:07:59.180] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 21:07:59.180] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 21:07:59.180] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 21:07:59.183] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 21:07:59.183] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 21:08:00.317] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 21:08:02.343] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 21:08:02.358] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 21:08:02.359] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 21:08:03.512] [INFO    ] [bot.launcher] 🌐 Túnel activo: https://introductory-notices-university-elsewhere.trycloudflare.com
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:08:57
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:08:58.185] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.6 GB (77.1% en uso)
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:08:58.186] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:08:58.187] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:08:58.188] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:01.228] [INFO    ] [bot.launcher] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 21:09:03.602] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:09:03.602] [INFO    ] [bot.run] 🚀 Bot de Ruleta iniciando...
+[2026-04-26 21:09:03.603] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:09:04.547] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.547] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:09:03
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.5 GB (78.2% en uso)
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:09:04.548] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:09:04.549] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:09:04.550] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:09:04.550] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:09:04.550] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.586] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:09:04.586] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:09:04
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:09:04.863] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.4 GB (78.2% en uso)
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:09:04.864] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:09:04.865] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:09:04.865] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:09:04.865] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 21:09:04.865] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 21:09:04.866] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 21:09:04.866] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 21:09:04.866] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 21:09:04.866] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 21:09:04.867] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 21:09:04.867] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 21:09:06.102] [INFO    ] [bot.driver] 🛡️ Parches Anti-Detección CDP aplicados.
+[2026-04-26 21:09:06.102] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 21:09:07.572] [INFO    ] [bot.launcher] 🌐 Túnel activo: https://acceptable-dame-extensions-elements.trycloudflare.com
+[2026-04-26 21:09:08.126] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 21:09:08.134] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 21:09:08.134] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:11:03
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:11:04.770] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]   RAM Disponible:        4.0 GB (74.5% en uso)
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:11:04.771] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:11:04.772] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:07.799] [INFO    ] [bot.launcher] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 21:11:10.081] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:11:10.081] [INFO    ] [bot.run] 🚀 Bot de Ruleta iniciando...
+[2026-04-26 21:11:10.081] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:11:10
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:11:11.058] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.9 GB (75.5% en uso)
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:11:11.059] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:11:11.060] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.100] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:11:11.100] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 21:11:11.671] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:11:11
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:11:11.672] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.9 GB (75.6% en uso)
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:11:11.673] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:11:11.674] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:11:11.674] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:11:11.674] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:11:11.674] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:11:11.674] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:11.674] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:11:11.674] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 21:11:11.674] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 21:11:11.675] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 21:11:11.675] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 21:11:11.675] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 21:11:11.675] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 21:11:11.676] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 21:11:11.676] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 21:11:12.708] [INFO    ] [bot.driver] 🛡️ Parches Anti-Detección Avanzados (CDP) aplicados.
+[2026-04-26 21:11:12.708] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 21:11:13.822] [INFO    ] [bot.launcher] 🌐 Túnel activo: https://wheel-displayed-barnes-clusters.trycloudflare.com
+[2026-04-26 21:11:14.739] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 21:11:14.740] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 21:11:14.740] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 21:11:19.685] [INFO    ] [bot.driver] 🧹 Limpiando cookies y almacenamiento local...
+[2026-04-26 21:11:21.416] [INFO    ] [bot.driver] 🔑 Iniciando sesión...
+[2026-04-26 21:11:24.666] [DEBUG   ] [bot.driver]    Botón 'Iniciar sesión' clickeado
+[2026-04-26 21:11:55.707] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:55.707] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:11:55.708] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:11:54
+[2026-04-26 21:11:55.708] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:55.709] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:11:55.709] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:11:55.710] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:11:55.710] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.8 GB (75.7% en uso)
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:11:55.711] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:11:55.712] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:11:58.733] [INFO    ] [bot.launcher] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 21:12:01.098] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:12:01.098] [INFO    ] [bot.run] 🚀 Bot de Ruleta iniciando...
+[2026-04-26 21:12:01.098] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:12:01
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:12:03.299] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.7 GB (76.9% en uso)
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:12:03.300] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:12:03.301] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:12:03.301] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:12:03.301] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:12:03.301] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:03.332] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:12:03.333] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 21:12:04.119] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:04.120] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:12:04.120] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:12:03
+[2026-04-26 21:12:04.121] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:04.121] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:12:04.121] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.6 GB (77.0% en uso)
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:12:04.122] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:12:04.123] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:12:04.124] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:12:04.124] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:12:04.124] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:12:04.125] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:12:04.125] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:12:04.127] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 21:12:04.128] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 21:12:04.128] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 21:12:04.129] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 21:12:04.129] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 21:12:04.129] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 21:12:04.131] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 21:12:04.131] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 21:12:05.453] [INFO    ] [bot.driver] 🛡️ Parches Anti-Detección Avanzados (CDP) aplicados.
+[2026-04-26 21:12:05.454] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 21:12:07.345] [INFO    ] [bot.launcher] 🌐 Túnel activo: https://airfare-stroke-doctor-locking.trycloudflare.com
+[2026-04-26 21:12:07.485] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 21:12:07.546] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 21:12:07.547] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 21:12:13.072] [INFO    ] [bot.driver] 🧹 Limpiando cookies y almacenamiento local...
+[2026-04-26 21:12:16.587] [INFO    ] [bot.driver] 🔑 Iniciando sesión...
+[2026-04-26 21:12:17.030] [DEBUG   ] [bot.driver]    Botón 'Iniciar sesión' clickeado
+[2026-04-26 21:12:23.967] [DEBUG   ] [bot.driver]    Email ingresado
+[2026-04-26 21:12:27.021] [DEBUG   ] [bot.driver]    Password ingresado
+[2026-04-26 21:12:27.456] [INFO    ] [bot.driver] ✅ Login enviado. Esperando confirmación de inicio de sesión...
