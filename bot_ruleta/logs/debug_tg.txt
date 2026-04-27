@@ -5810,3 +5810,34 @@
 [2026-04-26 19:06:42] CHECKING Auto Roulette: Threshold=10 Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 1, 'columna_1': 2, 'columna_2': 0, 'columna_3': 1}
 [2026-04-26 19:06:48] CHECKING Mega Roulette: Threshold=10 Delays={'docena_1': 0, 'docena_2': 1, 'docena_3': 4, 'columna_1': 0, 'columna_2': 1, 'columna_3': 4}
 [2026-04-26 19:06:50] CHECKING Roulette Macao: Threshold=10 Delays={'docena_1': 0, 'docena_2': 10, 'docena_3': 2, 'columna_1': 1, 'columna_2': 0, 'columna_3': 2}
+[2026-04-26 21:18:03] CHECKING Ruleta Latina: Threshold=10 Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 4, 'columna_1': 0, 'columna_2': 1, 'columna_3': 2}
+[2026-04-26 21:18:04] CHECKING Mega Roulette: Threshold=10 Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 5, 'columna_1': 4, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:05] CHECKING Brazilian Roulette: Threshold=10 Delays={'docena_1': 4, 'docena_2': 3, 'docena_3': 0, 'columna_1': 4, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:06] CHECKING Roulette 1: Threshold=10 Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 3, 'columna_1': 4, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:07] CHECKING Roulette 3: Threshold=10 Delays={'docena_1': 0, 'docena_2': 10, 'docena_3': 5, 'columna_1': 2, 'columna_2': 6, 'columna_3': 0}
+   >>> SENT ALERT for docena_2 (Delay 10)
+[2026-04-26 21:18:09] CHECKING Roulette Macao: Threshold=10 Delays={'docena_1': 3, 'docena_2': 1, 'docena_3': 0, 'columna_1': 1, 'columna_2': 0, 'columna_3': 2}
+[2026-04-26 21:18:10] CHECKING Roulette 2 Extra Time: Threshold=10 Delays={'docena_1': 2, 'docena_2': 3, 'docena_3': 0, 'columna_1': 0, 'columna_2': 2, 'columna_3': 4}
+[2026-04-26 21:18:11] CHECKING Brazilian Mega Roulette: Threshold=10 Delays={'docena_1': 2, 'docena_2': 1, 'docena_3': 0, 'columna_1': 2, 'columna_2': 4, 'columna_3': 0}
+[2026-04-26 21:18:12] CHECKING Lucky 6 Roulette: Threshold=10 Delays={'docena_1': 0, 'docena_2': 3, 'docena_3': 1, 'columna_1': 0, 'columna_2': 8, 'columna_3': 1}
+[2026-04-26 21:18:13] CHECKING Auto Roulette: Threshold=10 Delays={'docena_1': 1, 'docena_2': 2, 'docena_3': 0, 'columna_1': 1, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:14] CHECKING Stake Roulette: Threshold=10 Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 5, 'columna_1': 2, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:14] CHECKING Turkish Roulette: Threshold=10 Delays={'docena_1': 0, 'docena_2': 2, 'docena_3': 3, 'columna_1': 2, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:15] CHECKING German Roulette: Threshold=10 Delays={'docena_1': 3, 'docena_2': 2, 'docena_3': 0, 'columna_1': 4, 'columna_2': 0, 'columna_3': 2}
+[2026-04-26 21:18:16] CHECKING Romanian Roulette: Threshold=10 Delays={'docena_1': 5, 'docena_2': 2, 'docena_3': 0, 'columna_1': 0, 'columna_2': 2, 'columna_3': 1}
+[2026-04-26 21:18:17] CHECKING Roulette Italia Tricolore: Threshold=10 Delays={'docena_1': 1, 'docena_2': 5, 'docena_3': 0, 'columna_1': 3, 'columna_2': 0, 'columna_3': 8}
+[2026-04-26 21:18:18] CHECKING Russian Roulette: Threshold=10 Delays={'docena_1': 0, 'docena_2': 2, 'docena_3': 7, 'columna_1': 0, 'columna_2': 6, 'columna_3': 1}
+[2026-04-26 21:18:18] CHECKING Dutch Roulette: Threshold=10 Delays={'docena_1': 7, 'docena_2': 3, 'docena_3': 0, 'columna_1': 3, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:20] CHECKING Ruleta Latina: Threshold=10 Delays={'docena_1': 0, 'docena_2': 1, 'docena_3': 5, 'columna_1': 1, 'columna_2': 2, 'columna_3': 0}
+[2026-04-26 21:18:21] CHECKING Roulette 1: Threshold=10 Delays={'docena_1': 3, 'docena_2': 1, 'docena_3': 0, 'columna_1': 5, 'columna_2': 0, 'columna_3': 1}
+[2026-04-26 21:18:25] CHECKING Auto Roulette: Threshold=10 Delays={'docena_1': 2, 'docena_2': 3, 'docena_3': 0, 'columna_1': 2, 'columna_2': 4, 'columna_3': 0}
+[2026-04-26 21:18:26] CHECKING Turkish Roulette: Threshold=10 Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 4, 'columna_1': 0, 'columna_2': 2, 'columna_3': 1}
+[2026-04-26 21:18:26] CHECKING German Roulette: Threshold=10 Delays={'docena_1': 0, 'docena_2': 3, 'docena_3': 1, 'columna_1': 5, 'columna_2': 0, 'columna_3': 3}
+[2026-04-26 21:18:27] CHECKING Romanian Roulette: Threshold=10 Delays={'docena_1': 6, 'docena_2': 3, 'docena_3': 0, 'columna_1': 0, 'columna_2': 3, 'columna_3': 2}
+[2026-04-26 21:18:28] CHECKING Roulette Italia Tricolore: Threshold=10 Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 1, 'columna_1': 4, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:28] CHECKING Russian Roulette: Threshold=10 Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 8, 'columna_1': 1, 'columna_2': 7, 'columna_3': 0}
+[2026-04-26 21:18:31] CHECKING Brazilian Roulette: Threshold=10 Delays={'docena_1': 5, 'docena_2': 4, 'docena_3': 0, 'columna_1': 5, 'columna_2': 4, 'columna_3': 0}
+[2026-04-26 21:18:33] CHECKING Roulette Macao: Threshold=10 Delays={'docena_1': 4, 'docena_2': 2, 'docena_3': 0, 'columna_1': 0, 'columna_2': 1, 'columna_3': 3}
+[2026-04-26 21:18:33] CHECKING Roulette 2 Extra Time: Threshold=10 Delays={'docena_1': 0, 'docena_2': 4, 'docena_3': 1, 'columna_1': 1, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:36] CHECKING Stake Roulette: Threshold=10 Delays={'docena_1': 2, 'docena_2': 1, 'docena_3': 0, 'columna_1': 3, 'columna_2': 0, 'columna_3': 1}
+[2026-04-26 21:18:41] CHECKING Mega Roulette: Threshold=10 Delays={'docena_1': 3, 'docena_2': 0, 'docena_3': 6, 'columna_1': 5, 'columna_2': 0, 'columna_3': 1}

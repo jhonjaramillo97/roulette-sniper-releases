@@ -1,12 +1,12 @@
 ============================================================
   🔍 DIAGNÓSTICO DE ENTORNO
-  Fecha: 2026-04-26 21:12:03
+  Fecha: 2026-04-26 21:16:27
 ============================================================
   OS:                    Windows 11 (10.0.26200)
   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
   Chrome:                147.0.7727.103
   RAM Total:             15.8 GB
-  RAM Disponible:        3.6 GB (77.0% en uso)
+  RAM Disponible:        3.5 GB (77.9% en uso)
   Disco Libre:           38.2 GB de 133.3 GB
   .env:                  ✅ Encontrado
     Email:               dia***@gmail.com

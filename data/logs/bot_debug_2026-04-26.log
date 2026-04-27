@@ -366,3 +366,246 @@
 [2026-04-26 21:12:23.967] [DEBUG   ] [bot.driver]    Email ingresado
 [2026-04-26 21:12:27.021] [DEBUG   ] [bot.driver]    Password ingresado
 [2026-04-26 21:12:27.456] [INFO    ] [bot.driver] ✅ Login enviado. Esperando confirmación de inicio de sesión...
+[2026-04-26 21:16:21.273] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:21.273] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:16:20
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:16:21.274] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.6 GB (77.0% en uso)
+[2026-04-26 21:16:21.275] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:16:21.275] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:16:21.275] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:16:21.276] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:16:21.277] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:16:21.277] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:16:21.277] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:16:21.277] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:16:21.277] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:16:21.278] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:16:21.278] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:16:21.278] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:16:21.278] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:16:21.279] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:24.298] [INFO    ] [bot.launcher] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 21:16:26.523] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:16:26.524] [INFO    ] [bot.run] 🚀 Bot de Ruleta iniciando...
+[2026-04-26 21:16:26.524] [INFO    ] [bot.run] ============================================================
+[2026-04-26 21:16:27.422] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.422] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:16:27.422] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:16:26
+[2026-04-26 21:16:27.422] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.5 GB (77.8% en uso)
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:16:27.423] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:16:27.424] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:16:27.425] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:16:27.427] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:16:27.427] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:16:27.427] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:16:27.427] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.473] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:16:27.473] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 21:16:27.886] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.886] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 21:16:27
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 21:16:27.887] [INFO    ] [bot.diagnostics]   RAM Disponible:        3.5 GB (77.9% en uso)
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]   Disco Libre:           38.2 GB de 133.3 GB
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]   .env:                  ✅ Encontrado
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     Email:               dia***@gmail.com
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     Password:            ✅ Presente
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     TG Token:            ✅ Presente
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     TG Chat ID:          ✅ Presente
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     Threshold:           10
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]     Headless:            True
+[2026-04-26 21:16:27.888] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 21:16:27.889] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 21:16:27.889] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 21:16:27.889] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 21:16:27.889] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 21:16:27.889] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 21:16:27.889] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 21:16:27.889] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 21:16:27.889] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 21:16:27.889] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 21:16:27.890] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 21:16:27.890] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 21:16:27.890] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 21:16:27.891] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 21:16:27.891] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 21:16:29.590] [INFO    ] [bot.driver] 🛡️ Parches Anti-Detección Avanzados (CDP) aplicados.
+[2026-04-26 21:16:29.590] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 21:16:31.623] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 21:16:31.644] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 21:16:31.646] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 21:16:31.732] [INFO    ] [bot.launcher] 🌐 Túnel activo: https://realize-hired-demonstrates-ties.trycloudflare.com
+[2026-04-26 21:16:47.316] [INFO    ] [bot.driver] 🧹 Limpiando cookies y almacenamiento local...
+[2026-04-26 21:16:47.652] [INFO    ] [bot.driver] 🔑 Iniciando sesión...
+[2026-04-26 21:16:47.906] [DEBUG   ] [bot.driver]    Botón 'Iniciar sesión' clickeado
+[2026-04-26 21:16:56.144] [DEBUG   ] [bot.driver]    Email ingresado
+[2026-04-26 21:16:58.534] [DEBUG   ] [bot.driver]    Password ingresado
+[2026-04-26 21:16:58.719] [INFO    ] [bot.driver] ✅ Login enviado. Esperando confirmación de inicio de sesión...
+[2026-04-26 21:17:00.918] [INFO    ] [bot.driver] 🎉 Login exitoso confirmado!
+[2026-04-26 21:17:03.919] [INFO    ] [bot.lobby] 🔄 Navegando al Lobby... (from_anti_afk=False)
+[2026-04-26 21:17:11.004] [INFO    ] [bot.lobby]    👉 Click en 'Juego real' ...
+[2026-04-26 21:17:11.129] [INFO    ] [bot.lobby]    ⏳ Esperando recarga del iframe tras 'Juego real'...
+[2026-04-26 21:17:23.135] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe principal (max 15s)...
+[2026-04-26 21:17:23.189] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 21:17:23.190] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe anidado o elementos del juego (max 15s)...
+[2026-04-26 21:17:23.210] [INFO    ] [bot.iframe]    ✅ Elementos del juego encontrados en el iframe principal. No requiere anidado.
+[2026-04-26 21:17:23.210] [INFO    ] [bot.lobby] ✅ Contexto cambiado al iframe del juego.
+[2026-04-26 21:17:23.211] [INFO    ] [bot.lobby]    ⏳ Esperando a que el lobby termine de cargar...
+[2026-04-26 21:17:26.262] [INFO    ] [bot.lobby]    ✅ Lobby cargado! 31 tiles encontrados (3s)
+[2026-04-26 21:17:26.263] [INFO    ] [bot.iframe] 🛡️ Verificando modales bloquantes...
+[2026-04-26 21:17:27.550] [INFO    ] [bot.scanner] 👀 MODO ESPÍA ACTIVADO: Escaneando miniaturas...
+[2026-04-26 21:17:27.552] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe principal (max 15s)...
+[2026-04-26 21:17:27.632] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 21:17:27.632] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe anidado o elementos del juego (max 15s)...
+[2026-04-26 21:17:27.647] [INFO    ] [bot.iframe]    ✅ Elementos del juego encontrados en el iframe principal. No requiere anidado.
+[2026-04-26 21:17:29.647] [INFO    ] [bot.lobby] 🗺️  Escaneando IDs de mesas dinámicamente (modo robusto)...
+[2026-04-26 21:17:29.662] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe principal (max 15s)...
+[2026-04-26 21:17:29.869] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 21:17:29.870] [DEBUG   ] [bot.iframe]    ⏳ Esperando iframe anidado o elementos del juego (max 15s)...
+[2026-04-26 21:17:29.893] [INFO    ] [bot.iframe]    ✅ Elementos del juego encontrados en el iframe principal. No requiere anidado.
+[2026-04-26 21:17:29.893] [DEBUG   ] [bot.lobby]    Bajando scroll en contenedor interno...
+[2026-04-26 21:17:34.809] [INFO    ] [bot.lobby]    Encontrados 31 tiles totales. Escaneando uno por uno...
+[2026-04-26 21:18:02.722] [INFO    ] [bot.lobby] 
+   ID                             | TÍTULO
+[2026-04-26 21:18:02.722] [INFO    ] [bot.lobby]    ------------------------------------------------------------
+[2026-04-26 21:18:02.722] [INFO    ] [bot.lobby]    gatesofolympus01-2244          | Gates of Olympus Roulette
+[2026-04-26 21:18:02.722] [INFO    ] [bot.lobby]    crystalroul00001-2501          | Crystal Roulette
+[2026-04-26 21:18:02.722] [INFO    ] [bot.lobby]    rw321stakerws321-236           | Stake Roulette
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    roulerw234rwl292-234           | Ruleta Latina
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    1hl65ce1lxuqdrkr-204           | Mega Roulette
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    g03y1t9vvuhrfytl-227           | Roulette 1
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    yqpz3ichst2xg439-206           | Roulette Macao
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    powruprw1qm3xc25-240           | PowerUP Roulette
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    rwbrzportrwa16rg-237           | Brazilian Roulette
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    1hl323e1lxuqdrkr-210           | Auto Mega Roulette
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    chroma229rwltr22-230           | Roulette 3
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    fl9knouu0yjez2wi-203           | Speed Roulette 1
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    5kvxlw4c1qm3xcyn-201           | Roulette 2 Extra Time
+[2026-04-26 21:18:02.723] [INFO    ] [bot.lobby]    megaroulette3k01-2901          | Mega Roulette 3000
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    5bzl2835s5ruvweg-225           | Auto Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    r20speedrtwo201s-205           | Speed Roulette 2
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    lucky6roulettea3-211a1         | Lucky 6 Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    geogamingh2rw545-545           | VIP Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    autorwra311autor-226           | Speed Auto Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    mrbras531mrbr532-287           | Brazilian Mega Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    ar25vipautorw251-266           | VIP Auto Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    privroulettegt01-28201         | Privé Lounge Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    privroudeluxgt01-28301         | Privé Lounge Roulette Deluxe
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    p8l1j84prrmxzyic-224           | Turkish Roulette
+[2026-04-26 21:18:02.724] [INFO    ] [bot.lobby]    s2x6b4jdeqza2ge2-222           | German Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    t4jzencinod6iqwi-221           | Russian Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    v1c52fgw7yy02upz-223           | Roulette Italia Tricolore
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    romania233rwl291-233           | Romanian Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    megar0ul3tt3trk1-208           | Turkish Mega Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    greekchr11genric-297           | Greek Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    dutchrw235rwl293-235           | Dutch Roulette
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    ------------------------------------------------------------
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    ✅ Ruleta Latina: ID confirmado (roulerw234rwl292-234)
+[2026-04-26 21:18:02.725] [INFO    ] [bot.lobby]    ✅ Mega Roulette: ID confirmado (1hl65ce1lxuqdrkr-204)
+[2026-04-26 21:18:02.726] [INFO    ] [bot.lobby]    ✅ Brazilian Roulette: ID confirmado (rwbrzportrwa16rg-237)
+[2026-04-26 21:18:02.726] [INFO    ] [bot.lobby]    ✅ Roulette 1: ID confirmado (g03y1t9vvuhrfytl-227)
+[2026-04-26 21:18:02.726] [INFO    ] [bot.lobby]    ✅ Roulette 3: ID confirmado (chroma229rwltr22-230)
+[2026-04-26 21:18:02.726] [INFO    ] [bot.lobby]    ✅ Roulette Macao: ID confirmado (yqpz3ichst2xg439-206)
+[2026-04-26 21:18:02.760] [INFO    ] [bot.lobby]    ✅ Roulette 2 Extra Time: ID confirmado (5kvxlw4c1qm3xcyn-201)
+[2026-04-26 21:18:02.760] [INFO    ] [bot.lobby]    ✅ Brazilian Mega Roulette: ID confirmado (mrbras531mrbr532-287)
+[2026-04-26 21:18:02.760] [INFO    ] [bot.lobby]    ✅ Lucky 6 Roulette: ID confirmado (lucky6roulettea3-211a1)
+[2026-04-26 21:18:02.760] [INFO    ] [bot.lobby]    ✅ Auto Roulette: ID confirmado (5bzl2835s5ruvweg-225)
+[2026-04-26 21:18:02.761] [INFO    ] [bot.lobby]    ✅ Stake Roulette: ID confirmado (rw321stakerws321-236)
+[2026-04-26 21:18:02.761] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Turkish Roulette':
+[2026-04-26 21:18:02.762] [WARNING ] [bot.lobby]        Antiguo: p81lj84prrmxzyic-224
+[2026-04-26 21:18:02.762] [WARNING ] [bot.lobby]        Nuevo:   p8l1j84prrmxzyic-224
+[2026-04-26 21:18:02.762] [INFO    ] [bot.lobby]    ✅ German Roulette: ID confirmado (s2x6b4jdeqza2ge2-222)
+[2026-04-26 21:18:02.762] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Romanian Roulette':
+[2026-04-26 21:18:02.762] [WARNING ] [bot.lobby]        Antiguo: romania233rw1291-233
+[2026-04-26 21:18:02.762] [WARNING ] [bot.lobby]        Nuevo:   romania233rwl291-233
+[2026-04-26 21:18:02.762] [INFO    ] [bot.lobby]    ✅ Roulette Italia Tricolore: ID confirmado (v1c52fgw7yy02upz-223)
+[2026-04-26 21:18:02.763] [INFO    ] [bot.lobby]    ✅ Russian Roulette: ID confirmado (t4jzencinod6iqwi-221)
+[2026-04-26 21:18:02.763] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Dutch Roulette':
+[2026-04-26 21:18:02.763] [WARNING ] [bot.lobby]        Antiguo: dutchrw235rw1293-235
+[2026-04-26 21:18:02.763] [WARNING ] [bot.lobby]        Nuevo:   dutchrw235rwl293-235
+[2026-04-26 21:18:02.763] [INFO    ] [bot.lobby] 
+✅ Mapeo completado. 17/17 mesas emparejadas.
+[2026-04-26 21:18:02.891] [DEBUG   ] [bot.scanner] 🔊 Audio keep-alive activado
+[2026-04-26 21:18:02.891] [INFO    ] [bot.scanner] 📡 Comienza escaneo continuo...
+[2026-04-26 21:18:03.544] [WARNING ] [bot.scanner] ⚠️ Ruleta Latina: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:03.544] [INFO    ] [bot.scanner] 🔥 Ruleta Latina: Nuevos -> [-1, 6, 11, 31, 4, 29, 21, 21, 35, 4, 36, 11, 33, 14, 7, 6, 30, 19, 12, 5, 22]
+[2026-04-26 21:18:03.805] [DEBUG   ] [bot.scanner] TG check: Ruleta Latina Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 4, 'columna_1': 0, 'columna_2': 1, 'columna_3': 2}
+[2026-04-26 21:18:04.472] [WARNING ] [bot.scanner] ⚠️ Mega Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:04.472] [INFO    ] [bot.scanner] 🔥 Mega Roulette: Nuevos -> [-1, 30, 24, 36, 29, 36, 13, 9, 13, 0, 11, 28, 18, 17, 1, 31, 7, 6, 3, 20, 21]
+[2026-04-26 21:18:04.807] [DEBUG   ] [bot.scanner] TG check: Mega Roulette Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 5, 'columna_1': 4, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:05.624] [WARNING ] [bot.scanner] ⚠️ Brazilian Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:05.625] [INFO    ] [bot.scanner] 🔥 Brazilian Roulette: Nuevos -> [-1, 10, 27, 8, 35, 13, 8, 32, 12, 14, 10, 34, 32, 20, 29, 18, 1, 14, 36, 36, 36]
+[2026-04-26 21:18:05.893] [DEBUG   ] [bot.scanner] TG check: Brazilian Roulette Delays={'docena_1': 4, 'docena_2': 3, 'docena_3': 0, 'columna_1': 4, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:06.436] [WARNING ] [bot.scanner] ⚠️ Roulette 1: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:06.437] [INFO    ] [bot.scanner] 🔥 Roulette 1: Nuevos -> [-1, 35, 35, 29, 23, 28, 6, 8, 9, 4, 35, 6, 31, 3, 33, 27, 25, 27, 5, 17, 24]
+[2026-04-26 21:18:06.768] [DEBUG   ] [bot.scanner] TG check: Roulette 1 Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 3, 'columna_1': 4, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:07.302] [WARNING ] [bot.scanner] ⚠️ Roulette 3: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:07.302] [INFO    ] [bot.scanner] 🔥 Roulette 3: Nuevos -> [-1, 17, 7, 36, 16, 0, 31, 12, 5, 29, 17, 9, 36, 36, 35, 25, 0, 3, 4, 6, 9]
+[2026-04-26 21:18:08.958] [DEBUG   ] [bot.scanner] TG check: Roulette 3 Delays={'docena_1': 0, 'docena_2': 10, 'docena_3': 5, 'columna_1': 2, 'columna_2': 6, 'columna_3': 0}
+[2026-04-26 21:18:09.554] [WARNING ] [bot.scanner] ⚠️ Roulette Macao: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:09.555] [INFO    ] [bot.scanner] 🔥 Roulette Macao: Nuevos -> [-1, 11, 5, 14, 20, 35, 6, 25, 27, 4, 30, 30, 31, 6, 14, 33, 34, 4, 27, 22, 32]
+[2026-04-26 21:18:09.803] [DEBUG   ] [bot.scanner] TG check: Roulette Macao Delays={'docena_1': 3, 'docena_2': 1, 'docena_3': 0, 'columna_1': 1, 'columna_2': 0, 'columna_3': 2}
+[2026-04-26 21:18:10.340] [WARNING ] [bot.scanner] ⚠️ Roulette 2 Extra Time: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:10.340] [INFO    ] [bot.scanner] 🔥 Roulette 2 Extra Time: Nuevos -> [-1, 22, 5, 16, 30, 30, 31, 8, 23, 34, 28, 21, 30, 35, 31, 30, 30, 16, 11, 25, 25]
+[2026-04-26 21:18:10.605] [DEBUG   ] [bot.scanner] TG check: Roulette 2 Extra Time Delays={'docena_1': 2, 'docena_2': 3, 'docena_3': 0, 'columna_1': 0, 'columna_2': 2, 'columna_3': 4}
+[2026-04-26 21:18:11.213] [WARNING ] [bot.scanner] ⚠️ Brazilian Mega Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:11.214] [INFO    ] [bot.scanner] 🔥 Brazilian Mega Roulette: Nuevos -> [-1, 11, 17, 7, 3, 30, 27, 33, 4, 25, 4, 27, 4, 9, 22, 29, 8, 25, 10, 18, 36]
+[2026-04-26 21:18:11.449] [DEBUG   ] [bot.scanner] TG check: Brazilian Mega Roulette Delays={'docena_1': 2, 'docena_2': 1, 'docena_3': 0, 'columna_1': 2, 'columna_2': 4, 'columna_3': 0}
+[2026-04-26 21:18:11.972] [WARNING ] [bot.scanner] ⚠️ Lucky 6 Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:11.973] [INFO    ] [bot.scanner] 🔥 Lucky 6 Roulette: Nuevos -> [-1, 2, 28, 4, 19, 7, 3, 27, 32, 33, 25, 5, 8, 24, 16, 36, 25, 19, 31, 36, 10]
+[2026-04-26 21:18:12.236] [DEBUG   ] [bot.scanner] TG check: Lucky 6 Roulette Delays={'docena_1': 0, 'docena_2': 3, 'docena_3': 1, 'columna_1': 0, 'columna_2': 8, 'columna_3': 1}
+[2026-04-26 21:18:12.922] [WARNING ] [bot.scanner] ⚠️ Auto Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:12.922] [INFO    ] [bot.scanner] 🔥 Auto Roulette: Nuevos -> [-1, 13, 15, 17, 32, 1, 25, 10, 35, 22, 0, 34, 18, 33, 11, 25, 32, 32, 22, 4, 30]
+[2026-04-26 21:18:13.184] [DEBUG   ] [bot.scanner] TG check: Auto Roulette Delays={'docena_1': 1, 'docena_2': 2, 'docena_3': 0, 'columna_1': 1, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:13.769] [WARNING ] [bot.scanner] ⚠️ Stake Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:13.770] [INFO    ] [bot.scanner] 🔥 Stake Roulette: Nuevos -> [-1, 34, 4, 0, 29, 9, 32, 9, 14, 17, 2, 30, 10, 32, 6, 33, 33, 12, 17, 1, 6, 15]
+[2026-04-26 21:18:14.038] [DEBUG   ] [bot.scanner] TG check: Stake Roulette Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 5, 'columna_1': 2, 'columna_2': 3, 'columna_3': 0}
+[2026-04-26 21:18:14.626] [WARNING ] [bot.scanner] ⚠️ Turkish Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:14.626] [INFO    ] [bot.scanner] 🔥 Turkish Roulette: Nuevos -> [-1, 14, 8, 19, 23, 16, 20, 16, 36, 11, 5, 11, 26, 27, 20, 30, 15, 27, 16, 5, 9]
+[2026-04-26 21:18:14.885] [DEBUG   ] [bot.scanner] TG check: Turkish Roulette Delays={'docena_1': 0, 'docena_2': 2, 'docena_3': 3, 'columna_1': 2, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:15.473] [WARNING ] [bot.scanner] ⚠️ German Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:15.473] [INFO    ] [bot.scanner] 🔥 German Roulette: Nuevos -> [-1, 31, 5, 2, 32, 5, 29, 31, 1, 6, 34, 34, 33, 35, 20, 12, 25, 34, 6, 24, 35, 35]
+[2026-04-26 21:18:15.755] [DEBUG   ] [bot.scanner] TG check: German Roulette Delays={'docena_1': 3, 'docena_2': 2, 'docena_3': 0, 'columna_1': 4, 'columna_2': 0, 'columna_3': 2}
+[2026-04-26 21:18:16.295] [WARNING ] [bot.scanner] ⚠️ Romanian Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:16.295] [INFO    ] [bot.scanner] 🔥 Romanian Roulette: Nuevos -> [-1, 35, 9, 25, 25, 6, 7, 27, 21, 14, 24, 20, 15, 15, 24, 12, 3, 21, 22, 23, 27, 28]
+[2026-04-26 21:18:16.532] [DEBUG   ] [bot.scanner] TG check: Romanian Roulette Delays={'docena_1': 5, 'docena_2': 2, 'docena_3': 0, 'columna_1': 0, 'columna_2': 2, 'columna_3': 1}
+[2026-04-26 21:18:17.116] [WARNING ] [bot.scanner] ⚠️ Roulette Italia Tricolore: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:17.116] [INFO    ] [bot.scanner] 🔥 Roulette Italia Tricolore: Nuevos -> [-1, 20, 28, 2, 0, 15, 22, 13, 32, 14, 30, 11, 23, 30, 19, 2, 13, 35, 10, 29, 5, 29]
+[2026-04-26 21:18:17.341] [DEBUG   ] [bot.scanner] TG check: Roulette Italia Tricolore Delays={'docena_1': 1, 'docena_2': 5, 'docena_3': 0, 'columna_1': 3, 'columna_2': 0, 'columna_3': 8}
+[2026-04-26 21:18:17.883] [WARNING ] [bot.scanner] ⚠️ Russian Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:17.883] [INFO    ] [bot.scanner] 🔥 Russian Roulette: Nuevos -> [-1, 9, 8, 6, 5, 28, 16, 17, 30, 3, 27, 13, 13, 28, 17, 6, 3, 0, 19, 6, 4]
+[2026-04-26 21:18:18.154] [DEBUG   ] [bot.scanner] TG check: Russian Roulette Delays={'docena_1': 0, 'docena_2': 2, 'docena_3': 7, 'columna_1': 0, 'columna_2': 6, 'columna_3': 1}
+[2026-04-26 21:18:18.701] [WARNING ] [bot.scanner] ⚠️ Dutch Roulette: CADENA ROTA - sin empalme de 4+ números. Reinicio de sesión.
+[2026-04-26 21:18:18.702] [INFO    ] [bot.scanner] 🔥 Dutch Roulette: Nuevos -> [-1, 10, 24, 19, 13, 14, 9, 1, 22, 24, 26, 4, 31, 29, 4, 0, 19, 16, 22, 30, 35, 30]
+[2026-04-26 21:18:18.957] [DEBUG   ] [bot.scanner] TG check: Dutch Roulette Delays={'docena_1': 7, 'docena_2': 3, 'docena_3': 0, 'columna_1': 3, 'columna_2': 1, 'columna_3': 0}
+[2026-04-26 21:18:20.007] [INFO    ] [bot.scanner] 🔥 Ruleta Latina: Nuevos -> [12]
+[2026-04-26 21:18:20.034] [DEBUG   ] [bot.scanner] TG check: Ruleta Latina Delays={'docena_1': 0, 'docena_2': 1, 'docena_3': 5, 'columna_1': 1, 'columna_2': 2, 'columna_3': 0}
+[2026-04-26 21:18:21.908] [INFO    ] [bot.scanner] 🔥 Roulette 1: Nuevos -> [26]
+[2026-04-26 21:18:21.925] [DEBUG   ] [bot.scanner] TG check: Roulette 1 Delays={'docena_1': 3, 'docena_2': 1, 'docena_3': 0, 'columna_1': 5, 'columna_2': 0, 'columna_3': 1}
+[2026-04-26 21:18:25.174] [INFO    ] [bot.scanner] 🔥 Auto Roulette: Nuevos -> [36]
+[2026-04-26 21:18:25.190] [DEBUG   ] [bot.scanner] TG check: Auto Roulette Delays={'docena_1': 2, 'docena_2': 3, 'docena_3': 0, 'columna_1': 2, 'columna_2': 4, 'columna_3': 0}
+[2026-04-26 21:18:26.424] [INFO    ] [bot.scanner] 🔥 Turkish Roulette: Nuevos -> [16]
+[2026-04-26 21:18:26.439] [DEBUG   ] [bot.scanner] TG check: Turkish Roulette Delays={'docena_1': 1, 'docena_2': 0, 'docena_3': 4, 'columna_1': 0, 'columna_2': 2, 'columna_3': 1}
+[2026-04-26 21:18:26.975] [INFO    ] [bot.scanner] 🔥 German Roulette: Nuevos -> [8]
+[2026-04-26 21:18:26.989] [DEBUG   ] [bot.scanner] TG check: German Roulette Delays={'docena_1': 0, 'docena_2': 3, 'docena_3': 1, 'columna_1': 5, 'columna_2': 0, 'columna_3': 3}

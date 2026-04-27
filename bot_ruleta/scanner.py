@@ -131,10 +131,16 @@ def _run_single_session(email, password, headless=True, stop_event=None):
                 return
             scan_cycle += 1
             
-            # Mouse Jitter
+            # Interacción Simulada (JavaScript) para evitar desconexión de Pragmatic
             try:
-                body = driver.find_element(By.TAG_NAME, "body")
-                actions.move_to_element_with_offset(body, random.randint(-50,50), random.randint(-50,50)).perform()
+                driver.execute_script("""
+                    var ev = new MouseEvent('mousemove', {
+                        'view': window, 'bubbles': true, 'cancelable': true,
+                        'clientX': Math.floor(Math.random() * window.innerWidth),
+                        'clientY': Math.floor(Math.random() * window.innerHeight)
+                    });
+                    document.dispatchEvent(ev);
+                """)
             except: pass
 
             # -----------------------------------------------------------
@@ -279,11 +285,24 @@ def _run_single_session(email, password, headless=True, stop_event=None):
                             if el.is_displayed():
                                 log.warning("⏰ Sesión expirada por inactividad. Reiniciando sesión...")
                                 raise Exception("SESIÓN EXPIRADA: Reinicio automático")
-                        # Restaurar contexto
-                        switch_to_game_iframe(driver)
+                        # Restaurar contexto rápidamente
+                        switch_to_game_iframe(driver, max_wait=3)
                     except Exception as e:
                         if "SESIÓN EXPIRADA" in str(e):
                             raise
+                
+                if consecutive_zero_tiles == 15:
+                    log.warning("🔄 15 ciclos sin tiles. Intentando recuperar el lobby (Soft Refresh)...")
+                    driver.switch_to.default_content()
+                    driver.get(LOBBY_URL)
+                    time.sleep(5)
+                    ir_al_lobby(driver, wait, from_anti_afk=False)
+                    if LOBBY_MODE:
+                        switch_to_game_iframe(driver)
+                        time.sleep(2)
+                        map_tables_dynamic(driver)
+                    consecutive_zero_tiles = 0
+                    continue
                 
                 if consecutive_zero_tiles >= MAX_ZERO_TILES:
                     capture_screenshot(driver, "CRITICAL_max_zero_tiles")
