@@ -37,8 +37,32 @@
                 <span class="icon-grid" style="display:none;">🔲 Cuadrícula</span>
                 <span class="icon-list">📋 Lista</span>
             </button>
+            <!-- Botón del Link Remoto (Oculto por defecto hasta cargarlo) -->
+            <button id="btn-remote-link" title="Copiar Link Remoto"
+                style="display:none; align-items:center; justify-content:center; padding:0.5rem 1rem; background:rgba(246,130,31,0.15); border:1px solid rgba(246,130,31,0.4); color:#f6821f; border-radius:8px; font-weight:600; cursor:pointer; transition:0.3s; margin-left: 0.5rem;">
+                <span>🌐 Link Remoto</span>
+            </button>
         </div>
     </div>
+
+    <script>
+        // Checkear si hay link remoto disponible
+        fetch('/api/tunnel')
+            .then(r => r.json())
+            .then(data => {
+                if(data.url) {
+                    const btn = document.getElementById('btn-remote-link');
+                    btn.style.display = 'inline-flex';
+                    btn.onclick = () => {
+                        navigator.clipboard.writeText(data.url);
+                        const oldText = btn.innerHTML;
+                        btn.innerHTML = '<span>✅ ¡Copiado!</span>';
+                        setTimeout(() => btn.innerHTML = oldText, 2000);
+                    };
+                }
+            })
+            .catch(e => console.log('No remote link found'));
+    </script>
 
     <div class="overview-grid" id="overview-grid">
         <!-- Cards generadas por JS -->

@@ -42,15 +42,37 @@ LOBBY_URL = "https://stake.com.co/es/casino/juego/roulette-lobby-571"
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 # --- INTERVALOS ---
-AFK_INTERVAL = 300  # segundos (120 = 2 min debug, 300 = 5 min producción)
+AFK_INTERVAL = 300  # segundos (300 = 5 min producción)
 
 # --- COLORES DE RULETA ---
 REDS = ['1', '3', '5', '7', '9', '12', '14', '16', '18',
         '19', '21', '23', '25', '27', '30', '32', '34', '36']
 
+# --- RUNTIME OVERRIDES (set by GUI) ---
+_runtime_overrides = {}
+
+
+def set_runtime_config(**kwargs):
+    """Permite a la GUI inyectar credenciales sin modificar .env.
+    Uso: set_runtime_config(email='x', password='y', ...)
+    """
+    _runtime_overrides.update(kwargs)
+
 
 def load_credentials():
-    """Lee credenciales del archivo .env en la raíz del proyecto."""
+    """Lee credenciales. Prioridad: runtime overrides > .env"""
+    # Si la GUI ya configuró las credenciales, usarlas directamente
+    if _runtime_overrides:
+        return (
+            _runtime_overrides.get('email', ''),
+            _runtime_overrides.get('password', ''),
+            _runtime_overrides.get('tg_token', ''),
+            _runtime_overrides.get('tg_chat_id', ''),
+            _runtime_overrides.get('threshold', 12),
+            _runtime_overrides.get('headless', True),
+        )
+
+    # Fallback: leer desde .env
     email = ""
     password = ""
     tg_token = ""
@@ -97,3 +119,4 @@ def load_credentials():
         print(f"⚠️ No se pudo leer .env: {e}")
     
     return email, password, tg_token, tg_chat_id, alert_threshold, headless
+

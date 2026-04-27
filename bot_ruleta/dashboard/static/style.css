@@ -409,11 +409,10 @@ footer {
 .tc-delays {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
     gap: 6px;
     margin-bottom: 1rem;
-    aspect-ratio: 4/3;
-    /* Mantener proporción */
+    min-height: 120px;
 }
 
 /* Asignación de áreas en la tarjeta pequeña */
@@ -725,7 +724,7 @@ footer {
 
 .overview-grid.grid-view .tc-delays {
     min-height: 120px;
-    flex: 1 1 auto;
+    flex: 1 0 auto;
 }
 
 /* ── Chip de delay ── */

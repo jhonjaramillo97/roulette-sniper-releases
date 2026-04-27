@@ -34,16 +34,9 @@ def compute_delays(numeros):
         else:
             n = item
             
-        # Validación de Falso Continuidad (Salto de tiempo > 10 mins)
-        if timestamp_str:
-            try:
-                current_time = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-                if prev_time:
-                    delta = (prev_time - current_time).total_seconds()
-                    if delta > 600: # 10 minutos
-                        break # Se rompe la continuidad, dejamos de contar delays
-                prev_time = current_time
-            except: pass
+        # Validación rigurosa de continuidad (Marcador oficial de cadena rota)
+        if n == -1:
+            break # Topamos con un agujero ciego comprobado. Hasta aquí llega el delay actual.
             
         if n == 0:
             for k in delays:
@@ -164,6 +157,8 @@ def sync_backtest(table_name, threshold):
     """
     Sincroniza el historial de backtesting para una mesa.
     Solo procesa los giros nuevos usando un buffer de 'warmup' para mantener precisión.
+    
+    Robusto: guarda eventos activos antes de resetear por gaps y al final del procesamiento.
     """
     conn = get_connection()
     cursor = conn.cursor()
@@ -190,21 +185,46 @@ def sync_backtest(table_name, threshold):
     active_events = {}
     max_id_procesado = last_game_id
     last_ts_obj = None
+    last_ts_str = None
+    
+    def _flush_active_events(end_timestamp, force_save_warmup=False):
+        """Guarda todos los eventos activos que superaron el threshold."""
+        flushed = []
+        for k in list(active_events.keys()):
+            evt = active_events[k]
+            if delays[k] >= threshold:
+                evt["max_delay"] = max(evt["max_delay"], delays[k])
+                # Siempre guarda si se fuerza (ej. por Cadena Rota -1), o si el evento se generó en esta nueva tanda
+                if force_save_warmup or evt.get("is_new", False):
+                    cursor.execute("""
+                        INSERT INTO backtest_history 
+                        (table_name, zone_name, start_time, end_time, max_delay, threshold_used)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, (table_name, k, evt["start_time"], end_timestamp, evt["max_delay"], threshold))
+                flushed.append(k)
+        for k in flushed:
+            active_events.pop(k, None)
     
     for row in rows:
         db_id, n, ts = row
         max_id_procesado = max(max_id_procesado, db_id)
+        is_new_row = db_id > last_game_id
         
         try:
             current_ts_obj = datetime.strptime(ts, "%Y-%m-%d %H:%M:%S")
-            if last_ts_obj and (current_ts_obj - last_ts_obj).total_seconds() > 600:
-                # GAP de más de 10 minutos detectado (bot apagado). 
-                # Resetear delays para que no haya continuidad falsa.
-                for k in delays: delays[k] = 0
-                active_events.clear()
-            last_ts_obj = current_ts_obj
+            last_ts_str = ts
         except:
             pass
+            
+        if n == -1:
+            # MARCADOR OFICIAL DE CADENA ROTA
+            # El escáner dictaminó que hubo giros perdidos. 
+            # Guardamos lo acumulado y reseteamos.
+            # force_save_warmup = is_new_row fuerza a guardar incluso los eventos que empezaron en el warmup
+            _flush_active_events(last_ts_str, force_save_warmup=is_new_row)
+            for k in delays: delays[k] = 0
+            active_events.clear()
+            continue
         
         if n == 0:
             for k in delays: delays[k] += 1
@@ -227,7 +247,7 @@ def sync_backtest(table_name, threshold):
                     if delays[k] >= threshold:
                         if k in active_events:
                             evt = active_events.pop(k)
-                            if db_id > last_game_id:
+                            if is_new_row or evt.get("is_new", False):
                                 # Guardar evento completado
                                 cursor.execute("""
                                     INSERT INTO backtest_history 
@@ -242,7 +262,7 @@ def sync_backtest(table_name, threshold):
                     delays[k] += 1
                     if delays[k] >= threshold:
                         if k not in active_events:
-                            active_events[k] = {"start_time": ts, "max_delay": delays[k]}
+                            active_events[k] = {"start_time": ts, "max_delay": delays[k], "is_new": is_new_row}
                         else:
                             active_events[k]["max_delay"] = max(active_events[k]["max_delay"], delays[k])
 

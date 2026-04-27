@@ -1,0 +1,143 @@
+[2026-04-26 08:34:42.693] [INFO    ] [bot] Check Update: Local=1.3.1, Remote=1.3.1
+[2026-04-26 08:35:23.207] [INFO    ] [bot.gui] 🌐 Iniciando túnel Cloudflare...
+[2026-04-26 08:35:23.485] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 08:35:23.485] [INFO    ] [bot.scanner] 🔧 Ejecutando diagnóstico de entorno...
+[2026-04-26 08:35:23.783] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 08:35:23.784] [INFO    ] [bot.diagnostics]   🔍 DIAGNÓSTICO DE ENTORNO
+[2026-04-26 08:35:23.784] [INFO    ] [bot.diagnostics]   Fecha: 2026-04-26 08:35:23
+[2026-04-26 08:35:23.784] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 08:35:23.784] [INFO    ] [bot.diagnostics]   OS:                    Windows 11 (10.0.26200)
+[2026-04-26 08:35:23.784] [INFO    ] [bot.diagnostics]   Python:                3.14.0 (D:\GITHUBB\bot_stake\bot_ruleta\dist\RouletteSniperPro.exe)
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   Chrome:                147.0.7727.103
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   RAM Total:             15.8 GB
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   RAM Disponible:        5.0 GB (68.6% en uso)
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   Disco Libre:           38.9 GB de 133.3 GB
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   .env:                  ❌ NO ENCONTRADO
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   Permisos data/:        ✅ Escritura OK
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   Permisos logs/:        ✅ Escritura OK
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
+[2026-04-26 08:35:23.785] [INFO    ] [bot.diagnostics]   UC Driver:             ✅ v3.5.5
+[2026-04-26 08:35:23.786] [INFO    ] [bot.diagnostics]   Selenium:              ✅ v4.43.0
+[2026-04-26 08:35:23.786] [INFO    ] [bot.diagnostics] ============================================================
+[2026-04-26 08:35:23.786] [INFO    ] [bot.scanner] ============================================================
+[2026-04-26 08:35:23.786] [INFO    ] [bot.scanner] 🤖 Bot Supervisor Iniciado - Headless: True
+[2026-04-26 08:35:23.786] [INFO    ] [bot.scanner] 🔄 Iniciando sesión #1...
+[2026-04-26 08:35:23.786] [INFO    ] [bot.scanner] 🚀 Iniciando nueva sesión del bot...
+[2026-04-26 08:35:23.786] [INFO    ] [bot.driver] ⚙️ Configurando WebDriver (headless=True)...
+[2026-04-26 08:35:23.786] [INFO    ] [bot.driver] 👻 Modo Headless (ventana fuera de pantalla)...
+[2026-04-26 08:35:23.787] [INFO    ] [bot.driver] 🚀 Iniciando Chrome con undetected_chromedriver...
+[2026-04-26 08:35:23.791] [INFO    ] [bot.driver] 🌐 Chrome detectado: v147.0.7727.103
+[2026-04-26 08:35:23.791] [INFO    ] [bot.driver]    Usando version_main=147
+[2026-04-26 08:35:26.137] [INFO    ] [bot.gui] 🌐 Túnel activo: https://object-much-autumn-intervals.trycloudflare.com
+[2026-04-26 08:35:28.750] [INFO    ] [bot.driver] ✅ Chrome iniciado correctamente
+[2026-04-26 08:35:30.762] [INFO    ] [bot.driver] 🛡️ Chrome oculto de la barra de tareas
+[2026-04-26 08:35:30.765] [INFO    ] [bot.driver] 🛡️ Watchdog anti-minimización activo
+[2026-04-26 08:35:30.969] [INFO    ] [bot.screenshot] 📸 Screenshot guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\001_2026-04-26_083530_01_driver_iniciado.png
+[2026-04-26 08:35:31.064] [DEBUG   ] [bot.screenshot] 📄 HTML source guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\001_2026-04-26_083530_01_driver_iniciado.html
+[2026-04-26 08:35:31.064] [INFO    ] [bot.driver] 🔗 Navegando a Stake...
+[2026-04-26 08:35:40.254] [INFO    ] [bot.driver] 🧹 Limpiando cookies y almacenamiento local...
+[2026-04-26 08:35:40.829] [INFO    ] [bot.driver] 🔑 Iniciando sesión...
+[2026-04-26 08:35:41.249] [DEBUG   ] [bot.driver]    Botón 'Iniciar sesión' clickeado
+[2026-04-26 08:35:49.509] [DEBUG   ] [bot.driver]    Email ingresado
+[2026-04-26 08:35:51.816] [DEBUG   ] [bot.driver]    Password ingresado
+[2026-04-26 08:35:52.006] [INFO    ] [bot.driver] ✅ Login enviado. Esperando confirmación de inicio de sesión...
+[2026-04-26 08:35:54.107] [INFO    ] [bot.driver] 🎉 Login exitoso confirmado!
+[2026-04-26 08:35:57.108] [INFO    ] [bot.lobby] 🔄 Navegando al Lobby...
+[2026-04-26 08:36:03.728] [INFO    ] [bot.lobby]    👉 Click en 'Juego real' ...
+[2026-04-26 08:36:03.769] [INFO    ] [bot.lobby]    ⏳ Esperando recarga del iframe tras 'Juego real'...
+[2026-04-26 08:36:15.868] [DEBUG   ] [bot.iframe]    Iframes encontrados: 7
+[2026-04-26 08:36:15.900] [DEBUG   ] [bot.iframe]    Iframe #0: class='game', name='', src='https://zmcdpj2az4.qpidreoxcc.net/gs2c/playGame.do?key=token%3D74827151-fde16ebe...'
+[2026-04-26 08:36:15.922] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 08:36:16.945] [DEBUG   ] [bot.iframe]    Iframes internos (anidados): 0
+[2026-04-26 08:36:16.945] [INFO    ] [bot.lobby] ✅ Contexto cambiado al iframe del juego.
+[2026-04-26 08:36:16.945] [INFO    ] [bot.lobby]    ⏳ Esperando a que el lobby termine de cargar...
+[2026-04-26 08:36:19.976] [INFO    ] [bot.lobby]    ✅ Lobby cargado! 31 tiles encontrados (3s)
+[2026-04-26 08:36:19.977] [INFO    ] [bot.iframe] 🛡️ Verificando modales bloquantes...
+[2026-04-26 08:36:21.279] [INFO    ] [bot.screenshot] 📸 Screenshot guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\002_2026-04-26_083621_03_lobby_cargado.png
+[2026-04-26 08:36:21.298] [DEBUG   ] [bot.screenshot] 📄 HTML source guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\002_2026-04-26_083621_03_lobby_cargado.html
+[2026-04-26 08:36:21.298] [INFO    ] [bot.scanner] 👀 MODO ESPÍA ACTIVADO: Escaneando miniaturas...
+[2026-04-26 08:36:21.309] [DEBUG   ] [bot.iframe]    Iframes encontrados: 7
+[2026-04-26 08:36:21.329] [DEBUG   ] [bot.iframe]    Iframe #0: class='game', name='', src='https://zmcdpj2az4.qpidreoxcc.net/gs2c/playGame.do?key=token%3D74827151-fde16ebe...'
+[2026-04-26 08:36:21.352] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 08:36:22.383] [DEBUG   ] [bot.iframe]    Iframes internos (anidados): 0
+[2026-04-26 08:36:22.646] [INFO    ] [bot.screenshot] 📸 Screenshot guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\003_2026-04-26_083622_04_iframe_context.png
+[2026-04-26 08:36:22.665] [DEBUG   ] [bot.screenshot] 📄 HTML source guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\003_2026-04-26_083622_04_iframe_context.html
+[2026-04-26 08:36:24.666] [INFO    ] [bot.lobby] 🗺️  Escaneando IDs de mesas dinámicamente (modo robusto)...
+[2026-04-26 08:36:24.691] [DEBUG   ] [bot.iframe]    Iframes encontrados: 7
+[2026-04-26 08:36:24.713] [DEBUG   ] [bot.iframe]    Iframe #0: class='game', name='', src='https://zmcdpj2az4.qpidreoxcc.net/gs2c/playGame.do?key=token%3D74827151-fde16ebe...'
+[2026-04-26 08:36:24.734] [INFO    ] [bot.iframe]    ✅ Cambio a iframe #0 (class='game')
+[2026-04-26 08:36:25.772] [DEBUG   ] [bot.iframe]    Iframes internos (anidados): 0
+[2026-04-26 08:36:25.772] [DEBUG   ] [bot.lobby]    Bajando scroll en contenedor interno...
+[2026-04-26 08:36:30.402] [INFO    ] [bot.lobby]    Encontrados 31 tiles totales. Escaneando uno por uno...
+[2026-04-26 08:36:57.392] [INFO    ] [bot.lobby] 
+   ID                             | TÍTULO
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    ------------------------------------------------------------
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    gatesofolympus01-2244          | Gates of Olympus Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    crystalroul00001-2501          | Crystal Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    rw321stakerws321-236           | Stake Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    roulerw234rwl292-234           | Ruleta Latina
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    1hl65ce1lxuqdrkr-204           | Mega Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    g03y1t9vvuhrfytl-227           | Roulette 1
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    yqpz3ichst2xg439-206           | Roulette Macao
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    powruprw1qm3xc25-240           | PowerUP Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    rwbrzportrwa16rg-237           | Brazilian Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    1hl323e1lxuqdrkr-210           | Auto Mega Roulette
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    chroma229rwltr22-230           | Roulette 3
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    fl9knouu0yjez2wi-203           | Speed Roulette 1
+[2026-04-26 08:36:57.393] [INFO    ] [bot.lobby]    5kvxlw4c1qm3xcyn-201           | Roulette 2 Extra Time
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    megaroulette3k01-2901          | Mega Roulette 3000
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    5bzl2835s5ruvweg-225           | Auto Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    r20speedrtwo201s-205           | Speed Roulette 2
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    lucky6roulettea3-211a1         | Lucky 6 Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    geogamingh2rw545-545           | VIP Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    autorwra311autor-226           | Speed Auto Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    mrbras531mrbr532-287           | Brazilian Mega Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    ar25vipautorw251-266           | VIP Auto Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    privroulettegt01-28201         | Privé Lounge Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    privroudeluxgt01-28301         | Privé Lounge Roulette Deluxe
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    p8l1j84prrmxzyic-224           | Turkish Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    s2x6b4jdeqza2ge2-222           | German Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    t4jzencinod6iqwi-221           | Russian Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    v1c52fgw7yy02upz-223           | Roulette Italia Tricolore
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    romania233rwl291-233           | Romanian Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    megar0ul3tt3trk1-208           | Turkish Mega Roulette
+[2026-04-26 08:36:57.394] [INFO    ] [bot.lobby]    greekchr11genric-297           | Greek Roulette
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    dutchrw235rwl293-235           | Dutch Roulette
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ------------------------------------------------------------
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Ruleta Latina: ID confirmado (roulerw234rwl292-234)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Mega Roulette: ID confirmado (1hl65ce1lxuqdrkr-204)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Brazilian Roulette: ID confirmado (rwbrzportrwa16rg-237)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Roulette 1: ID confirmado (g03y1t9vvuhrfytl-227)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Roulette 3: ID confirmado (chroma229rwltr22-230)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Roulette Macao: ID confirmado (yqpz3ichst2xg439-206)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Roulette 2 Extra Time: ID confirmado (5kvxlw4c1qm3xcyn-201)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Brazilian Mega Roulette: ID confirmado (mrbras531mrbr532-287)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Lucky 6 Roulette: ID confirmado (lucky6roulettea3-211a1)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Auto Roulette: ID confirmado (5bzl2835s5ruvweg-225)
+[2026-04-26 08:36:57.395] [INFO    ] [bot.lobby]    ✅ Stake Roulette: ID confirmado (rw321stakerws321-236)
+[2026-04-26 08:36:57.395] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Turkish Roulette':
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Antiguo: p81lj84prrmxzyic-224
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Nuevo:   p8l1j84prrmxzyic-224
+[2026-04-26 08:36:57.396] [INFO    ] [bot.lobby]    ✅ German Roulette: ID confirmado (s2x6b4jdeqza2ge2-222)
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Romanian Roulette':
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Antiguo: romania233rw1291-233
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Nuevo:   romania233rwl291-233
+[2026-04-26 08:36:57.396] [INFO    ] [bot.lobby]    ✅ Roulette Italia Tricolore: ID confirmado (v1c52fgw7yy02upz-223)
+[2026-04-26 08:36:57.396] [INFO    ] [bot.lobby]    ✅ Russian Roulette: ID confirmado (t4jzencinod6iqwi-221)
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]    ⚠️  CAMBIO DE ID para 'Dutch Roulette':
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Antiguo: dutchrw235rw1293-235
+[2026-04-26 08:36:57.396] [WARNING ] [bot.lobby]        Nuevo:   dutchrw235rwl293-235
+[2026-04-26 08:36:57.396] [INFO    ] [bot.lobby] 
+✅ Mapeo completado. 17/17 mesas emparejadas.
+[2026-04-26 08:36:57.536] [INFO    ] [bot.screenshot] 📸 Screenshot guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\004_2026-04-26_083657_05_mesas_mapeadas.png
+[2026-04-26 08:36:57.555] [DEBUG   ] [bot.screenshot] 📄 HTML source guardado: D:\GITHUBB\bot_stake\bot_ruleta\dist\data\logs\screenshots\004_2026-04-26_083657_05_mesas_mapeadas.html
+[2026-04-26 08:36:57.664] [DEBUG   ] [bot.scanner] 🔊 Audio keep-alive activado
+[2026-04-26 08:36:57.665] [INFO    ] [bot.scanner] 📡 Comienza escaneo continuo...
+[2026-04-26 08:36:58.564] [INFO    ] [bot.scanner] 🔥 Ruleta Latina: Nuevos -> [27, 8, 29, 20, 11, 29, 23, 11, 30, 11, 15, 32, 13, 25, 8, 34, 34, 35, 20, 29]
+[2026-04-26 08:36:58.749] [DEBUG   ] [bot.scanner] TG check: Ruleta Latina Delays={'docena_1': 5, 'docena_2': 1, 'docena_3': 0, 'columna_1': 3, 'columna_2': 0, 'columna_3': 9}
+[2026-04-26 08:36:59.322] [INFO    ] [bot.scanner] 🔥 Mega Roulette: Nuevos -> [8, 4, 32, 36, 6, 2, 28, 24, 9, 1, 18, 20, 7, 27, 4, 24, 16, 10, 31, 23]
+[2026-04-26 08:36:59.540] [DEBUG   ] [bot.scanner] TG check: Mega Roulette Delays={'docena_1': 2, 'docena_2': 0, 'docena_3': 1, 'columna_1': 1, 'columna_2': 0, 'columna_3': 4}
+[2026-04-26 08:37:00.135] [INFO    ] [bot.scanner] 🔥 Brazilian Roulette: Nuevos -> [32, 17, 11, 7, 18, 19, 23, 9, 6, 32, 12, 11, 27, 3, 32, 29, 4, 32, 16, 4]
+[2026-04-26 08:37:00.355] [DEBUG   ] [bot.scanner] TG check: Brazilian Roulette Delays={'docena_1': 0, 'docena_2': 1, 'docena_3': 2, 'columna_1': 0, 'columna_2': 2, 'columna_3': 6}
+[2026-04-26 08:37:00.903] [INFO    ] [bot.scanner] 🔥 Roulette 1: Nuevos -> [27, 15, 5, 7, 33, 18, 19, 30, 28, 3, 14, 26, 17, 26, 1, 20, 29, 15, 32, 21]
+[2026-04-26 08:37:01.090] [DEBUG   ] [bot.scanner] TG check: Roulette 1 Delays={'docena_1': 5, 'docena_2': 0, 'docena_3': 1, 'columna_1': 5, 'columna_2': 1, 'columna_3': 0}

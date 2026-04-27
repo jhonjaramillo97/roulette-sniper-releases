@@ -6,9 +6,16 @@ import sqlite3
 import os
 from bot_ruleta.config import TABLES
 
+import sys
+
 DB_NAME = "ruleta.db"
-# La BD se creará en bot_ruleta/data/
-DB_PATH = os.path.join(os.path.dirname(__file__), "data", DB_NAME)
+if getattr(sys, 'frozen', False):
+    DATA_DIR = os.path.join(os.path.dirname(sys.executable), "data")
+else:
+    DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+
+os.makedirs(DATA_DIR, exist_ok=True)
+DB_PATH = os.path.join(DATA_DIR, DB_NAME)
 
 
 def get_connection():

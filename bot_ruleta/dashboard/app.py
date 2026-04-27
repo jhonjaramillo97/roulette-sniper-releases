@@ -12,10 +12,21 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from bot_ruleta.config import TABLES, REDS, load_credentials
 import bot_ruleta.logic as bt_logic
 
-app = Flask(__name__, static_url_path='', static_folder='static')
+# Determinar rutas correctas para PyInstaller o desarrollo
+if getattr(sys, 'frozen', False):
+    # Archivos estáticos están empaquetados en MEIPASS
+    static_dir = os.path.join(sys._MEIPASS, 'dashboard', 'static')
+    # Datos persistentes van junto al ejecutable
+    DATA_DIR = os.path.join(os.path.dirname(sys.executable), "data")
+else:
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    DATA_DIR = os.path.join(base_dir, "data")
 
-# BD en bot_ruleta/data/ruleta.db
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "ruleta.db")
+app = Flask(__name__, static_url_path='', static_folder=static_dir)
+
+os.makedirs(DATA_DIR, exist_ok=True)
+DB_PATH = os.path.join(DATA_DIR, "ruleta.db")
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -47,17 +58,15 @@ def calcular_delays(table_name, limit=500):
 
 @app.route('/')
 def serve_index():
-    return send_from_directory('static', 'index.html')
-
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/mesa')
 def serve_mesa():
-    return send_from_directory('static', 'mesa.html')
-
+    return send_from_directory(app.static_folder, 'mesa.html')
 
 @app.route('/analisis')
 def serve_analisis():
-    return send_from_directory('static', 'analisis.html')
+    return send_from_directory(app.static_folder, 'analisis.html')
 
 
 @app.route('/api/mesas')
@@ -218,5 +227,24 @@ def get_analisis_global():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/api/tunnel')
+def get_tunnel():
+    """Retorna el link actual de Cloudflare si está disponible"""
+    import os
+    # El archivo se guarda en bot_ruleta/data/tunnel.txt por test_launcher.py
+    tunnel_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "tunnel.txt")
+    if os.path.exists(tunnel_file):
+        try:
+            with open(tunnel_file, "r") as f:
+                url = f.read().strip()
+                if url:
+                    return jsonify({"url": url})
+        except Exception:
+            pass
+            
+    return jsonify({"url": None})
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5050, host='0.0.0.0')
+    print("Iniciando dashboard en puerto 5055...")
+    app.run(port=5055, host='0.0.0.0', use_reloader=False)

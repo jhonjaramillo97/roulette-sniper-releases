@@ -1,0 +1,22 @@
+============================================================
+  🔍 DIAGNÓSTICO DE ENTORNO
+  Fecha: 2026-04-26 14:54:38
+============================================================
+  OS:                    Windows 11 (10.0.26200)
+  Python:                3.14.0 (D:\GITHUBB\bot_stake\dist\RouletteSniperPro.exe)
+  Chrome:                147.0.7727.103
+  RAM:                   psutil no instalado (instalar para más info)
+  Disco Libre:           38.4 GB de 133.3 GB
+  .env:                  ✅ Encontrado
+    Email:               dia***@gmail.com
+    Password:            ✅ Presente
+    TG Token:            ✅ Presente
+    TG Chat ID:          ✅ Presente
+    Threshold:           15
+    Headless:            True
+  Permisos data/:        ✅ Escritura OK
+  Permisos logs/:        ✅ Escritura OK
+  Red (stake.com.co):    ❌ NO ACCESIBLE: <urlopen error [WinError 10054] Se ha forzado la interrupción de una conexión existente por el host remoto>
+  UC Driver:             ✅ v3.5.5
+  Selenium:              ✅ v4.41.0
+============================================================
