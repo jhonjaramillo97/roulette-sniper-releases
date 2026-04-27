@@ -139,8 +139,8 @@ def setup_driver(headless=True):
 # ---------------------------------------------------------------------------
 
 def _hide_chrome_window(driver):
-    """Oculta la ventana de Chrome de la barra de tareas y lanza un hilo
-    vigilante que la restaura si alguien la minimiza accidentalmente."""
+    """Mueve la ventana de Chrome fuera de la pantalla (modo headless simulado),
+    pero la deja en la barra de tareas para evitar suspensiones agresivas del OS."""
     import platform
     if platform.system() != "Windows":
         return
@@ -152,16 +152,10 @@ def _hide_chrome_window(driver):
     user32 = ctypes.windll.user32
 
     # Constantes Win32
-    GWL_EXSTYLE       = -20
-    WS_EX_APPWINDOW   = 0x00040000  # Aparece en barra de tareas
-    WS_EX_TOOLWINDOW  = 0x00000080  # NO aparece en barra de tareas
-    SW_HIDE           = 0
     SW_SHOWNOACTIVATE = 4
     SW_RESTORE        = 9
-    SWP_NOMOVE        = 0x0002
     SWP_NOSIZE        = 0x0001
     SWP_NOACTIVATE    = 0x0010
-    SWP_FRAMECHANGED  = 0x0020
 
     time.sleep(2)  # Esperar a que Chrome cree su ventana
 
@@ -190,32 +184,23 @@ def _hide_chrome_window(driver):
         log.warning(f"⚠️ No se pudo encontrar ventana Chrome: {e}")
 
     if not hwnd:
-        log.warning("⚠️ HWND no encontrado, Chrome seguirá visible en taskbar")
+        log.warning("⚠️ HWND no encontrado, Chrome seguirá visible")
         return
 
     try:
-        # 1. Ocultar temporalmente la ventana
-        user32.ShowWindow(hwnd, SW_HIDE)
-
-        # 2. Quitar estilo WS_EX_APPWINDOW y añadir WS_EX_TOOLWINDOW
-        #    Esto la elimina de la barra de tareas y de Alt+Tab
-        style = user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
-        style = (style & ~WS_EX_APPWINDOW) | WS_EX_TOOLWINDOW
-        user32.SetWindowLongW(hwnd, GWL_EXSTYLE, style)
-
-        # 3. Mover fuera de pantalla y mostrar sin activar
+        # 1. Mover fuera de pantalla y mostrar sin activar
         user32.SetWindowPos(
             hwnd, None, -2400, -2400, 0, 0,
-            SWP_NOSIZE | SWP_NOACTIVATE | SWP_FRAMECHANGED
+            SWP_NOSIZE | SWP_NOACTIVATE
         )
         user32.ShowWindow(hwnd, SW_SHOWNOACTIVATE)
 
-        log.info("🛡️ Chrome oculto de la barra de tareas")
+        log.info("🛡️ Chrome movido fuera de pantalla (visible en barra de tareas)")
     except Exception as e:
-        log.warning(f"⚠️ Error ocultando ventana: {e}")
+        log.warning(f"⚠️ Error moviendo ventana: {e}")
         return
 
-    # 4. Hilo vigilante: si alguien minimiza Chrome, restaurar inmediatamente
+    # 2. Hilo vigilante: si alguien minimiza Chrome, restaurar inmediatamente
     def _watchdog():
         while True:
             try:
@@ -226,11 +211,6 @@ def _hide_chrome_window(driver):
                         hwnd, None, -2400, -2400, 0, 0,
                         SWP_NOSIZE | SWP_NOACTIVATE
                     )
-                # Verificar que siga siendo TOOLWINDOW
-                current_style = user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
-                if current_style & WS_EX_APPWINDOW:
-                    current_style = (current_style & ~WS_EX_APPWINDOW) | WS_EX_TOOLWINDOW
-                    user32.SetWindowLongW(hwnd, GWL_EXSTYLE, current_style)
             except:
                 break  # La ventana fue cerrada, terminar el hilo
             time.sleep(2)
