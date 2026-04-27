@@ -82,6 +82,22 @@ def setup_driver(headless=True):
         else:
             log.info("   Usando detección automática de versión")
             driver = uc.Chrome(options=options)
+        
+        # --- ANTI DETECCIÓN (CDP) ---
+        driver.execute_cdp_cmd("Network.setUserAgentOverride", {
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "acceptLanguage": "es-ES,es;q=0.9,en;q=0.8"
+        })
+        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+                Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+                window.navigator.chrome = {runtime: {}};
+                Object.defineProperty(navigator, 'languages', {get: () => ['es-ES', 'es', 'en']});
+                Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
+            """
+        })
+        log.info("🛡️ Parches Anti-Detección CDP aplicados.")
+        
         log.info("✅ Chrome iniciado correctamente")
     except Exception as e:
         log.critical(f"❌ FALLO AL INICIAR CHROME: {e}")
