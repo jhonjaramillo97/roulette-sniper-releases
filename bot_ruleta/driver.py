@@ -83,20 +83,43 @@ def setup_driver(headless=True):
             log.info("   Usando detección automática de versión")
             driver = uc.Chrome(options=options)
         
-        # --- ANTI DETECCIÓN (CDP) ---
+        # --- ANTI DETECCIÓN (CDP) AVANZADA ---
         driver.execute_cdp_cmd("Network.setUserAgentOverride", {
             "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "acceptLanguage": "es-ES,es;q=0.9,en;q=0.8"
+            "acceptLanguage": "es-ES,es;q=0.9,en;q=0.8,en-US;q=0.7",
+            "platform": "Win32"
         })
         driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
             "source": """
+                // 1. Ocultar webdriver
                 Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-                window.navigator.chrome = {runtime: {}};
-                Object.defineProperty(navigator, 'languages', {get: () => ['es-ES', 'es', 'en']});
+                
+                // 2. Mock de window.chrome
+                window.chrome = {
+                    runtime: {}
+                };
+                
+                // 3. Mock de plugins y languages
                 Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
+                Object.defineProperty(navigator, 'languages', {get: () => ['es-ES', 'es', 'en', 'en-US']});
+                
+                // 4. Bypass de navigator.permissions
+                const originalQuery = window.navigator.permissions.query;
+                window.navigator.permissions.query = (parameters) => (
+                    parameters.name === 'notifications' ?
+                        Promise.resolve({ state: Notification.permission }) :
+                        originalQuery(parameters)
+                );
+                
+                // 5. Eliminar variables CDC de Selenium
+                for (let key in window) {
+                    if (key.startsWith('cdc_')) {
+                        delete window[key];
+                    }
+                }
             """
         })
-        log.info("🛡️ Parches Anti-Detección CDP aplicados.")
+        log.info("🛡️ Parches Anti-Detección Avanzados (CDP) aplicados.")
         
         log.info("✅ Chrome iniciado correctamente")
     except Exception as e:
