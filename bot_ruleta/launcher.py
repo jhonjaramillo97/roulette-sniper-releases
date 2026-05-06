@@ -57,15 +57,42 @@ def render_ui():
         print("\n=========================================================")
         print(" (Presiona Ctrl+C para apagar todo)")
 
-def _start_cloudflared():
+# ====================================================================
+# 🛑 MODO DESARROLLADOR (Cambiar a False antes de compilar para el cliente)
+# Si es True: Crea un túnel temporal (para no robar la conexión del cliente).
+# Si es False: Usa el túnel oficial botstake.shop
+# ====================================================================
+DEV_MODE = True
+
+def get_cf_env_vars():
+    """Retorna el token y dominio de Cloudflare. Si DEV_MODE es True, devuelve None."""
+    if DEV_MODE:
+        return None, None
+        
+    # Token permanente para botstake.shop
+    token = "eyJhIjoiNDg0MjBiMDE0MzQ4MzhlNDk2ODAwNzYwOTM1Y2I0ODciLCJ0IjoiYmMxNzAxODMtOWI0NS00Zjg5LWI0ZDItYWQ0MzMwOWNlNGRiIiwicyI6Ik9Ua3hObVF5TkdNdFpUUTFNeTAwT0dSbUxUaGhOemd0TWpJMlpUSTFZell5TldZMiJ9"
+    domain = "botstake.shop"
+    
+    return token, domain
+
+def _start_cloudflared(token=None):
     """Inicia un proceso cloudflared y retorna el proceso."""
     creationflags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
-    return subprocess.Popen(
-        ["cloudflared", "tunnel", "--url", "http://localhost:5055"],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.PIPE,
-        creationflags=creationflags
-    )
+    
+    if token and token != "":
+        return subprocess.Popen(
+            ["cloudflared", "tunnel", "run", "--token", token],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            creationflags=creationflags
+        )
+    else:
+        return subprocess.Popen(
+            ["cloudflared", "tunnel", "--url", "http://localhost:5050"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            creationflags=creationflags
+        )
 
 def _update_tunnel_url(found_url):
     """Actualiza el URL del túnel en todas partes: variable global, archivo, Telegram."""
@@ -112,17 +139,43 @@ def cloudflared_watchdog():
     
     while True:
         try:
+            token, domain = get_cf_env_vars()
             log.info("🌐 Iniciando túnel Cloudflare...")
-            cf_proc = _start_cloudflared()
+            cf_proc = _start_cloudflared(token)
             
-            # Leer stderr continuamente (NO hacer break al primer URL)
-            for line in iter(cf_proc.stderr.readline, b''):
-                line_str = line.decode('utf-8', errors='ignore').strip()
-                match = url_pattern.search(line_str)
-                if match:
-                    found_url = match.group(0)
-                    _update_tunnel_url(found_url)
-                    log.info(f"🌐 Túnel activo: {found_url}")
+            if token:
+                # Flujo permanente Zero Trust
+                display_url = "https://botstake.shop"
+                _update_tunnel_url(display_url)
+                log.info(f"🌐 Túnel autenticado conectado.")
+                
+                # Consumir stderr para que no se bloquee
+                for line in iter(cf_proc.stderr.readline, b''):
+                    pass
+            else:
+                # Flujo de desarrollo (random trycloudflare)
+                log.info("🌐 Iniciando túnel aleatorio para desarrollo...")
+                for line in iter(cf_proc.stderr.readline, b''):
+                    line_str = line.decode('utf-8', errors='ignore')
+                    match = url_pattern.search(line_str)
+                    if match:
+                        found_url = match.group(0)
+                        _update_tunnel_url(found_url)
+                        log.info(f"🌐 Túnel temporal establecido: {found_url}")
+                        
+                        # Avisar a Telegram del túnel temporal
+                        try:
+                            cfg = load_saved_credentials()
+                            tg_token = cfg.get("tg_token", "")
+                            chat_id = cfg.get("tg_chat_id", "")
+                            if tg_token and chat_id:
+                                tg_msg = (
+                                    f"⚙️ <b>[MODO DESARROLLADOR]</b> Bot iniciado.\n\n"
+                                    f"Dashboard temporal: {found_url}"
+                                )
+                                send_telegram_msg(tg_token, chat_id, tg_msg)
+                        except Exception:
+                            pass
             
             # Si llegamos aquí, cloudflared cerró su stderr → el proceso murió
             cf_proc.wait()
@@ -163,12 +216,42 @@ def cleanup():
         try: os.remove(TUNNEL_FILE)
         except: pass
         
-    # Eliminar ejecutables viejos si venimos de una actualización
-    import glob
-    exe_dir = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))
-    for old_file in glob.glob(os.path.join(exe_dir, "*.old")):
-        try: os.remove(old_file)
-        except: pass
+    import threading
+    import time
+    
+    def _do_cleanup():
+        import glob
+        exe_dir = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))
+        current_exe = os.path.abspath(sys.executable) if getattr(sys, 'frozen', False) else None
+        
+        cleanup_patterns = ["*.old", "*.update", "restart_update.bat"]
+        
+        # Intentar borrar hasta 5 veces (cada 2 segundos) para asegurar que se liberen los bloqueos
+        for _ in range(5):
+            all_clean = True
+            
+            for pattern in cleanup_patterns:
+                for old_file in glob.glob(os.path.join(exe_dir, pattern)):
+                    try: 
+                        os.remove(old_file)
+                    except: 
+                        all_clean = False
+            
+            # Limpiar versiones viejas versionadas (RouletteSniperPro_v*.exe) excepto la actual
+            for old_file in glob.glob(os.path.join(exe_dir, "RouletteSniperPro_v*.exe")):
+                if current_exe and os.path.abspath(old_file) == current_exe:
+                    continue
+                try: 
+                    os.remove(old_file)
+                except: 
+                    all_clean = False
+            
+            if all_clean:
+                break
+                
+            time.sleep(2)
+            
+    threading.Thread(target=_do_cleanup, daemon=True).start()
 
 if __name__ == "__main__":
     # Limpiar archivo viejo

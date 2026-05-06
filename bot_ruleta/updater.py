@@ -3,14 +3,19 @@ import threading
 import os
 import sys
 import subprocess
+import glob
 import logging
 
 log = logging.getLogger("bot")
 
-CURRENT_VERSION = "2.0.6"
+CURRENT_VERSION = "2.0.18"
 # Usamos la API de GitHub en lugar de raw.githubusercontent.com para mayor fiabilidad
 VERSION_URL = "https://api.github.com/repos/jhonjaramillo97/roulette-sniper-releases/contents/version.txt"
-DOWNLOAD_URL = "https://github.com/jhonjaramillo97/roulette-sniper-releases/releases/latest/download/RouletteSniperPro.exe"
+
+# La URL de descarga ahora apunta al asset versionado (latest release)
+def _get_download_url(version):
+    """Genera la URL de descarga para una versión específica."""
+    return f"https://github.com/jhonjaramillo97/roulette-sniper-releases/releases/download/v{version}/RouletteSniperPro_v{version}.exe"
 
 def check_for_updates(callback):
     """
@@ -59,9 +64,36 @@ def check_for_updates(callback):
             
     threading.Thread(target=_check, daemon=True).start()
 
+def _cleanup_old_versions(update_dir, keep_exe=None):
+    """Limpia archivos de actualizaciones anteriores (.old, .update, versiones viejas)."""
+    patterns = [
+        os.path.join(update_dir, "*.old"),
+        os.path.join(update_dir, "*.update"),
+        os.path.join(update_dir, "restart_update.bat"),
+    ]
+    
+    for pattern in patterns:
+        for f in glob.glob(pattern):
+            try:
+                os.remove(f)
+                log.debug(f"Limpieza: eliminado {os.path.basename(f)}")
+            except Exception:
+                pass
+    
+    # Limpiar versiones viejas versionadas (RouletteSniperPro_v*.exe) excepto la que vamos a usar
+    for f in glob.glob(os.path.join(update_dir, "RouletteSniperPro_v*.exe")):
+        if keep_exe and os.path.abspath(f) == os.path.abspath(keep_exe):
+            continue
+        try:
+            os.remove(f)
+            log.debug(f"Limpieza: eliminado versión vieja {os.path.basename(f)}")
+        except Exception:
+            pass
+
 def perform_update(new_version, progress_callback, completion_callback):
     """
-    Downloads the new executable and spawns a bat file to replace the current one.
+    Downloads the new versioned executable and spawns a bat file to replace the current one.
+    The new exe is named RouletteSniperPro_v{version}.exe for clear identification.
     """
     def _update():
         try:
@@ -71,18 +103,27 @@ def perform_update(new_version, progress_callback, completion_callback):
                 return
 
             current_exe = sys.executable
+            current_exe_name = os.path.basename(current_exe)
             update_dir = os.path.dirname(current_exe)
-            update_exe_final = os.path.join(update_dir, "RouletteSniperPro.update")
             
-            log.info(f"Descargando versión {new_version}...")
+            # Nombre versionado del nuevo ejecutable
+            new_exe_name = f"RouletteSniperPro_v{new_version}.exe"
+            new_exe_path = os.path.join(update_dir, new_exe_name)
             
-            # Download with progress
-            with urllib.request.urlopen(DOWNLOAD_URL) as response:
+            # 1. Limpieza previa de archivos de actualizaciones anteriores
+            log.info("🧹 Limpiando archivos de actualizaciones anteriores...")
+            _cleanup_old_versions(update_dir, keep_exe=current_exe)
+            
+            # 2. Descargar nueva versión con nombre versionado
+            download_url = _get_download_url(new_version)
+            log.info(f"📥 Descargando v{new_version} desde {download_url}...")
+            
+            with urllib.request.urlopen(download_url) as response:
                 total_size = int(response.getheader('Content-Length').strip())
                 downloaded = 0
                 chunk_size = 8192
                 
-                with open(update_exe_final, 'wb') as f:
+                with open(new_exe_path, 'wb') as f:
                     while True:
                         chunk = response.read(chunk_size)
                         if not chunk:
@@ -92,36 +133,85 @@ def perform_update(new_version, progress_callback, completion_callback):
                         if total_size > 0:
                             percent = min(100, int((downloaded / total_size) * 100))
                             progress_callback(percent)
-                            
-            old_exe = os.path.join(update_dir, "RouletteSniperPro.old")
+            
+            # Verificar que se descargó correctamente
+            if not os.path.exists(new_exe_path) or os.path.getsize(new_exe_path) < 1000000:
+                raise Exception(f"Archivo descargado inválido ({os.path.getsize(new_exe_path)} bytes)")
+            
+            log.info(f"✅ Descarga completa: {new_exe_name} ({os.path.getsize(new_exe_path) / 1024 / 1024:.1f} MB)")
+            
+            # 3. Generar script .bat robusto con reintentos limitados
+            old_exe_path = os.path.join(update_dir, f"{current_exe_name}.old")
             
             bat_content = f"""@echo off
 setlocal
-:: Intentar cerrar cualquier proceso remanente
-taskkill /F /IM "RouletteSniperPro.exe" >nul 2>&1
-timeout /t 1 /nobreak >nul
+echo ============================================
+echo   Actualizando Roulette Sniper Pro v{new_version}
+echo ============================================
+echo.
 
-:wait_exit
-if exist "{old_exe}" del /f /q "{old_exe}" >nul 2>&1
-ren "{current_exe}" "RouletteSniperPro.old"
-if errorlevel 1 (
-    timeout /t 1 /nobreak >nul
-    goto wait_exit
+:: Paso 1: Cerrar procesos del bot (con árbol completo)
+echo Cerrando procesos anteriores...
+taskkill /F /T /IM "{current_exe_name}" >nul 2>&1
+timeout /t 2 /nobreak >nul
+
+:: Paso 2: Renombrar el exe actual a .old (con reintentos limitados)
+set RETRIES=0
+:retry_rename
+if %RETRIES% GEQ 10 (
+    echo ERROR: No se pudo renombrar el exe actual tras 10 intentos.
+    echo El archivo puede estar en uso por otro proceso.
+    pause
+    exit /b 1
 )
 
-ren "{update_exe_final}" "RouletteSniperPro.exe"
-start "" "RouletteSniperPro.exe"
-del "%~f0"
+if exist "{old_exe_path}" del /f /q "{old_exe_path}" >nul 2>&1
+ren "{current_exe}" "{current_exe_name}.old" >nul 2>&1
+if errorlevel 1 (
+    set /a RETRIES+=1
+    echo Reintentando renombrar... (intento %RETRIES%/10)
+    timeout /t 2 /nobreak >nul
+    goto retry_rename
+)
+
+echo Exe anterior renombrado correctamente.
+
+:: Paso 3: Copiar el nuevo exe versionado con el nombre original
+copy /y "{new_exe_path}" "{current_exe}" >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: No se pudo copiar la nueva version.
+    :: Restaurar el exe original
+    ren "{old_exe_path}" "{current_exe_name}" >nul 2>&1
+    pause
+    exit /b 1
+)
+
+echo Nueva version instalada correctamente.
+
+:: Paso 4: Limpiar archivos temporales
+del /f /q "{old_exe_path}" >nul 2>&1
+del /f /q "{new_exe_path}" >nul 2>&1
+
+:: Paso 5: Ejecutar la nueva version
+echo Iniciando Roulette Sniper Pro v{new_version}...
+start "" "{current_exe}"
+
+:: Paso 6: Auto-eliminar este script
+(goto) 2>nul & del "%~f0"
 """
             
-            bat_path = os.path.join(update_dir, "restart_update.bat")
+            import tempfile
+            bat_path = os.path.join(tempfile.gettempdir(), "restart_update.bat")
             with open(bat_path, "w", encoding="utf-8") as f:
                 f.write(bat_content)
             
-            log.info("Ejecutando restart script...")
+            log.info("🔄 Ejecutando script de actualización...")
             completion_callback(True, "Actualización descargada. Reiniciando...")
             
-            subprocess.Popen(["cmd", "/c", bat_path], creationflags=subprocess.CREATE_NO_WINDOW)
+            subprocess.Popen(
+                ["cmd", "/c", bat_path],
+                creationflags=subprocess.CREATE_NO_WINDOW
+            )
             os._exit(0)
             
         except Exception as e:

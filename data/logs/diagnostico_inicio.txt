@@ -1,15 +1,14 @@
 ============================================================
   🔍 DIAGNÓSTICO DE ENTORNO
-  Fecha: 2026-04-26 21:16:27
+  Fecha: 2026-05-05 09:28:34
 ============================================================
   OS:                    Windows 11 (10.0.26200)
-  Python:                3.14.0 (C:\Users\HappyUser\AppData\Local\Programs\Python\Python314\python.exe)
-  Chrome:                147.0.7727.103
-  RAM Total:             15.8 GB
-  RAM Disponible:        3.5 GB (77.9% en uso)
-  Disco Libre:           38.2 GB de 133.3 GB
+  Python:                3.14.0 (D:\GITHUBB\bot_stake\venv\Scripts\python.exe)
+  Chrome:                147.0.7727.138
+  RAM:                   psutil no instalado (instalar para más info)
+  Disco Libre:           37.8 GB de 133.3 GB
   .env:                  ✅ Encontrado
-    Email:               dia***@gmail.com
+    Email:               jva***@gmail.com
     Password:            ✅ Presente
     TG Token:            ✅ Presente
     TG Chat ID:          ✅ Presente
@@ -19,5 +18,5 @@
   Permisos logs/:        ✅ Escritura OK
   Red (stake.com.co):    ❌ NO ACCESIBLE: HTTP Error 403: Forbidden
   UC Driver:             ✅ v3.5.5
-  Selenium:              ✅ v4.43.0
+  Selenium:              ✅ v4.41.0
 ============================================================

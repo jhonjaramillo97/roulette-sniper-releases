@@ -10,7 +10,16 @@ from flask import Flask, jsonify, request, send_from_directory
 # dirname(dirname(dirname)) = PROYECTO ROOT
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from bot_ruleta.config import TABLES, REDS, load_credentials
+from bot_ruleta.gui_credentials import load_saved_credentials
 import bot_ruleta.logic as bt_logic
+
+def get_dashboard_threshold():
+    """Lee el threshold de los datos guardados por la GUI. Fallback al .env"""
+    saved = load_saved_credentials()
+    if saved and "threshold" in saved:
+        return saved["threshold"]
+    _, _, _, _, threshold, _ = load_credentials()
+    return threshold
 
 # Determinar rutas correctas para PyInstaller o desarrollo
 if getattr(sys, 'frozen', False):
@@ -80,7 +89,7 @@ def get_overview():
     from datetime import datetime
     
     # Cargar threshold dinámico
-    _, _, _, _, threshold, _ = load_credentials()
+    threshold = get_dashboard_threshold()
     
     result = []
     for t in TABLES:
@@ -145,7 +154,7 @@ def get_data():
         return jsonify({"error": "Error leyendo BD"}), 500
 
     # Cargar threshold dinámico
-    _, _, _, _, threshold, _ = load_credentials()
+    threshold = get_dashboard_threshold()
 
     alertas = [k for k, v in delays.items() if v >= threshold]
     
@@ -203,7 +212,7 @@ def get_backtest():
 
 @app.route('/api/analisis_global')
 def get_analisis_global():
-    _, _, _, _, threshold, _ = load_credentials()
+    threshold = get_dashboard_threshold()
     
     # 1. Sincronizar TODAS las mesas para asegurar datos frescos
     try:
@@ -246,5 +255,5 @@ def get_tunnel():
 
 
 if __name__ == '__main__':
-    print("Iniciando dashboard en puerto 5055...")
-    app.run(port=5055, host='0.0.0.0', use_reloader=False)
+    print("Iniciando dashboard en puerto 5050...")
+    app.run(port=5050, host='0.0.0.0', use_reloader=False)

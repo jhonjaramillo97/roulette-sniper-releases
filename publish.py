@@ -125,7 +125,7 @@ def create_release(new_version):
     data = {
         "tag_name": tag,
         "name": f"Version {new_version}",
-        "body": "Actualizacion automatica de Roulette Sniper Pro.",
+        "body": "Actualizacion modo dev activado guiapp.",
         "draft": False,
         "prerelease": False
     }
@@ -134,9 +134,10 @@ def create_release(new_version):
     print(f"OK: Release {tag} creado.")
     return res["id"]
 
-def upload_asset(release_id, file_path):
-    print("-> Subiendo RouletteSniperPro.exe a GitHub (puede tardar unos minutos)...")
-    url = f"https://uploads.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases/{release_id}/assets?name=RouletteSniperPro.exe"
+def upload_asset(release_id, file_path, version):
+    asset_name = f"RouletteSniperPro_v{version}.exe"
+    print(f"-> Subiendo {asset_name} a GitHub (puede tardar unos minutos)...")
+    url = f"https://uploads.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases/{release_id}/assets?name={asset_name}"
     
     with open(file_path, "rb") as f:
         file_data = f.read()
@@ -173,7 +174,7 @@ def main():
     release_id = create_release(new_version)
     
     # 5. Subir .exe
-    upload_asset(release_id, EXE_PATH)
+    upload_asset(release_id, EXE_PATH, new_version)
     
     print("\n" + "="*50)
     print("LANZAMIENTO COMPLETADO EXITOSAMENTE!")

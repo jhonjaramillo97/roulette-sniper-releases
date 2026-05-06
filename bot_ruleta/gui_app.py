@@ -17,7 +17,7 @@ from bot_ruleta.gui_credentials import save_credentials, load_saved_credentials,
 from bot_ruleta.config import set_runtime_config, load_credentials
 from bot_ruleta.debug_logger import attach_gui_queue, get_logger
 from bot_ruleta.scanner import run_bot
-from bot_ruleta.launcher import _start_cloudflared, TUNNEL_FILE
+from bot_ruleta.launcher import _start_cloudflared, get_cf_env_vars, TUNNEL_FILE
 from bot_ruleta.logic import send_telegram_msg
 
 from bot_ruleta.updater import check_for_updates, perform_update
@@ -29,22 +29,23 @@ ctk.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dar
 
 log = get_logger("gui")
 
+def resource_path(relative_path):
+    """Resuelve rutas de archivos empaquetados (PyInstaller) o de desarrollo."""
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
+
 class RouletteApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         self.title("Roulette Sniper Pro")
-        self.geometry("800x600")
-        self.minsize(800, 600)
+        self.geometry("800x750")
+        self.minsize(800, 750)
         
         # Configurar icono de ventana
-        def resource_path(relative_path):
-            try:
-                base_path = sys._MEIPASS
-            except Exception:
-                base_path = os.path.dirname(os.path.abspath(__file__))
-            return os.path.join(base_path, relative_path)
-            
         icon_path = resource_path("icon.ico")
         if os.path.exists(icon_path):
             try:
@@ -142,53 +143,80 @@ class RouletteApp(ctk.CTk):
         self.cf_watchdog_thread.start()
 
     def cloudflared_watchdog(self):
-        import re
-        url_pattern = re.compile(r"https://[a-zA-Z0-9-]+\.trycloudflare\.com")
-        
         while not self.stop_event.is_set():
             try:
+                token, domain = get_cf_env_vars()
                 log.info("🌐 Iniciando túnel Cloudflare...")
-                self.cf_proc = _start_cloudflared()
+                self.cf_proc = _start_cloudflared(token)
                 
-                for line in iter(self.cf_proc.stderr.readline, b''):
-                    if self.stop_event.is_set():
-                        break
-                    line_str = line.decode('utf-8', errors='ignore').strip()
-                    match = url_pattern.search(line_str)
-                    if match:
-                        found_url = match.group(0)
-                        old_url = self.public_url
-                        self.public_url = found_url
-                        
-                        # Update dashboard UI
-                        self.frames[DashboardScreen].update_cf_url(found_url)
-                        
+                if token:
+                    # Link fijo permanente
+                    display_url = "https://botstake.shop"
+                    old_url = self.public_url
+                    self.public_url = display_url
+                    self.frames[DashboardScreen].update_cf_url(display_url)
+                    
+                    try:
+                        with open(TUNNEL_FILE, "w") as f:
+                            f.write(display_url)
+                    except Exception:
+                        pass
+                    
+                    # Notificar por Telegram
+                    if display_url != old_url:
                         try:
-                            with open(TUNNEL_FILE, "w") as f:
-                                f.write(found_url)
-                        except Exception:
-                            pass
+                            _, _, tg_token, chat_id, _, _ = load_credentials()
+                            if tg_token and chat_id and tg_token.strip() != "":
+                                tg_msg = (
+                                    f"🌐 *Dashboard Activo*\n\n"
+                                    f"El bot acaba de encenderse. Panel permanente disponible en:\n\n{display_url}"
+                                )
+                                send_telegram_msg(tg_token, chat_id, tg_msg)
+                        except Exception as e:
+                            log.warning(f"Error enviando URL a Telegram: {e}")
+                    
+                    log.info(f"🌐 Túnel Zero Trust conectado: {display_url}")
+                    
+                    # Consumir stderr para que el proceso no se bloquee
+                    for line in iter(self.cf_proc.stderr.readline, b''):
+                        if self.stop_event.is_set():
+                            break
+                else:
+                    # Flujo de desarrollo (random trycloudflare)
+                    import re
+                    url_pattern = re.compile(r"https://[a-zA-Z0-9-]+\.trycloudflare\.com")
+                    log.info("🌐 Iniciando túnel aleatorio para desarrollo...")
+                    for line in iter(self.cf_proc.stderr.readline, b''):
+                        if self.stop_event.is_set():
+                            break
+                        line_str = line.decode('utf-8', errors='ignore')
+                        match = url_pattern.search(line_str)
+                        if match:
+                            found_url = match.group(0)
+                            old_url = self.public_url
+                            self.public_url = found_url
+                            self.frames[DashboardScreen].update_cf_url(found_url)
                             
-                        # Enviar notificación por Telegram (solo si el URL cambió)
-                        if found_url != old_url:
                             try:
-                                _, _, token, chat_id, _, _ = load_credentials()
-                                if token and chat_id and token.strip() != "":
-                                    if old_url and "trycloudflare" in str(old_url):
+                                with open(TUNNEL_FILE, "w") as f:
+                                    f.write(found_url)
+                            except Exception:
+                                pass
+                                
+                            log.info(f"🌐 Túnel temporal establecido: {found_url}")
+                            
+                            # Avisar a Telegram del túnel temporal
+                            if found_url != old_url:
+                                try:
+                                    _, _, tg_token, chat_id, _, _ = load_credentials()
+                                    if tg_token and chat_id and tg_token.strip() != "":
                                         tg_msg = (
-                                            f"🔄 *Enlace del Dashboard Actualizado*\n\n"
-                                            f"El túnel se renovó automáticamente. Nuevo enlace:\n\n{found_url}"
+                                            f"⚙️ <b>[MODO DESARROLLADOR]</b> Bot iniciado.\n\n"
+                                            f"Dashboard temporal: {found_url}"
                                         )
-                                    else:
-                                        tg_msg = (
-                                            f"🌐 *Nuevo Enlace del Dashboard*\n\n"
-                                            f"El bot acaba de encenderse. Puedes acceder al escáner en tiempo real desde cualquier lugar aquí:\n\n{found_url}"
-                                        )
-                                    send_telegram_msg(token, chat_id, tg_msg)
-                            except Exception as e:
-                                log.warning(f"Error enviando URL a Telegram: {e}")
-
-                        log.info(f"🌐 Túnel activo: {found_url}")
+                                        send_telegram_msg(tg_token, chat_id, tg_msg)
+                                except Exception:
+                                    pass
                 
                 if self.stop_event.is_set():
                     break
@@ -357,12 +385,22 @@ class LoginScreen(ctk.CTkFrame):
         self.form = ctk.CTkFrame(self.form_container, fg_color="transparent")
         self.form.place(relx=0.5, rely=0.5, anchor="center")
 
+        # Logo
+        try:
+            logo_path = resource_path(os.path.join("dashboard", "static", "logo.png"))
+            img = Image.open(logo_path)
+            self.logo_image = ctk.CTkImage(light_image=img, dark_image=img, size=(100, 100))
+            lbl_logo = ctk.CTkLabel(self.form, image=self.logo_image, text="")
+            lbl_logo.pack(anchor="center", pady=(0, 20))
+        except Exception as e:
+            print(f"Error loading logo: {e}")
+
         # Title
         lbl_title = ctk.CTkLabel(self.form, text="Welcome Back!", font=ctk.CTkFont(size=34, weight="bold"), text_color="#00C853")
-        lbl_title.pack(anchor="w", pady=(0, 5))
+        lbl_title.pack(anchor="center", pady=(0, 5))
         
         lbl_subtitle = ctk.CTkLabel(self.form, text="Sign in to your bot instance", font=ctk.CTkFont(size=14), text_color="gray")
-        lbl_subtitle.pack(anchor="w", pady=(0, 20))
+        lbl_subtitle.pack(anchor="center", pady=(0, 20))
 
         # Stake Credentials
         lbl_email = ctk.CTkLabel(self.form, text="Email de Stake:", font=ctk.CTkFont(size=14, weight="bold"), text_color="#00C853")
@@ -731,7 +769,7 @@ if __name__ == "__main__":
         
         # Usar waitress (producción) para evitar deadlocks de Werkzeug en modo --windowed
         from waitress import serve
-        serve(flask_app, host='0.0.0.0', port=5055, clear_untrusted_proxy_headers=False)
+        serve(flask_app, host='0.0.0.0', port=5050, clear_untrusted_proxy_headers=False)
         sys.exit(0)
 
     app = RouletteApp()

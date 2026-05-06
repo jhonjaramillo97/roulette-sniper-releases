@@ -139,8 +139,9 @@ def setup_driver(headless=True):
 # ---------------------------------------------------------------------------
 
 def _hide_chrome_window(driver):
-    """Mueve la ventana de Chrome fuera de la pantalla (modo headless simulado),
-    pero la deja en la barra de tareas para evitar suspensiones agresivas del OS."""
+    """Oculta la ventana de Chrome de la barra de tareas y la mueve fuera de la pantalla.
+    Busca la ventana por PID del proceso Chrome (determinístico, no depende del título).
+    Lanza un hilo vigilante que la restaura si alguien la minimiza accidentalmente."""
     import platform
     if platform.system() != "Windows":
         return
@@ -152,66 +153,163 @@ def _hide_chrome_window(driver):
     user32 = ctypes.windll.user32
 
     # Constantes Win32
+    GWL_EXSTYLE       = -20
+    WS_EX_APPWINDOW   = 0x00040000  # Aparece en barra de tareas
+    WS_EX_TOOLWINDOW  = 0x00000080  # NO aparece en barra de tareas
+    SW_HIDE           = 0
     SW_SHOWNOACTIVATE = 4
     SW_RESTORE        = 9
+    SWP_NOMOVE        = 0x0002
     SWP_NOSIZE        = 0x0001
     SWP_NOACTIVATE    = 0x0010
+    SWP_FRAMECHANGED  = 0x0020
 
-    time.sleep(2)  # Esperar a que Chrome cree su ventana
-
-    # Buscar el HWND de la ventana principal de Chrome
-    hwnd = None
+    # Obtener el PID del proceso Chrome desde el driver
+    chrome_pid = None
     try:
+        chrome_pid = driver.service.process.pid
+    except Exception:
+        pass
+    if not chrome_pid:
+        try:
+            chrome_pid = driver.browser_pid
+        except Exception:
+            pass
+    
+    if not chrome_pid:
+        log.warning("⚠️ No se pudo obtener PID de Chrome, fallback a búsqueda por título")
+    
+    def _find_hwnd_by_pid(target_pid):
+        """Busca ventanas de nivel superior pertenecientes al proceso Chrome o sus hijos."""
         results = []
         
         @ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
-        def enum_windows_callback(h, _lparam):
+        def enum_callback(h, _lparam):
+            if user32.IsWindowVisible(h):
+                # Obtener PID de la ventana
+                pid = ctypes.wintypes.DWORD()
+                user32.GetWindowThreadProcessId(h, ctypes.byref(pid))
+                window_pid = pid.value
+                
+                # Chrome puede lanzar procesos hijos; verificar si es el proceso padre
+                # o un hijo directo (el renderer). Aceptamos ambos.
+                if window_pid == target_pid:
+                    # Verificar que sea una ventana principal (tiene tamaño razonable)
+                    rect = ctypes.wintypes.RECT()
+                    user32.GetWindowRect(h, ctypes.byref(rect))
+                    width = rect.right - rect.left
+                    height = rect.bottom - rect.top
+                    if width > 200 and height > 200:
+                        results.append(h)
+            return True
+        
+        user32.EnumWindows(enum_callback, 0)
+        return results
+    
+    def _find_hwnd_by_title():
+        """Fallback: busca por título de ventana."""
+        results = []
+        
+        @ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
+        def enum_callback(h, _lparam):
             if user32.IsWindowVisible(h):
                 length = user32.GetWindowTextLengthW(h)
                 if length > 0:
                     buf = ctypes.create_unicode_buffer(length + 1)
                     user32.GetWindowTextW(h, buf, length + 1)
                     title = buf.value
-                    if title and ("Chrome" in title or "Stake" in title or "stake" in title):
+                    if title and ("Chrome" in title or "Stake" in title or "stake" in title or "data:," in title):
                         results.append(h)
             return True
-
-        user32.EnumWindows(enum_windows_callback, 0)
         
-        if results:
-            hwnd = results[0]
-    except Exception as e:
-        log.warning(f"⚠️ No se pudo encontrar ventana Chrome: {e}")
+        user32.EnumWindows(enum_callback, 0)
+        return results
+
+    # Intentar encontrar la ventana con reintentos
+    hwnd = None
+    for attempt in range(5):
+        time.sleep(2)
+        
+        if chrome_pid:
+            found = _find_hwnd_by_pid(chrome_pid)
+            if found:
+                hwnd = found[0]
+                log.debug(f"🛡️ HWND encontrado por PID {chrome_pid} en intento {attempt+1}")
+                break
+        
+        # Fallback a búsqueda por título
+        found = _find_hwnd_by_title()
+        if found:
+            hwnd = found[0]
+            log.debug(f"🛡️ HWND encontrado por título en intento {attempt+1}")
+            break
+        
+        log.debug(f"⏳ Esperando ventana Chrome (intento {attempt+1}/5)...")
 
     if not hwnd:
-        log.warning("⚠️ HWND no encontrado, Chrome seguirá visible")
+        log.warning("⚠️ HWND no encontrado tras 5 intentos, Chrome seguirá visible en taskbar")
         return
 
-    try:
-        # 1. Mover fuera de pantalla y mostrar sin activar
-        user32.SetWindowPos(
-            hwnd, None, -2400, -2400, 0, 0,
-            SWP_NOSIZE | SWP_NOACTIVATE
-        )
-        user32.ShowWindow(hwnd, SW_SHOWNOACTIVATE)
+    def _apply_hide(target_hwnd):
+        """Aplica el ocultamiento completo a un HWND."""
+        try:
+            user32.ShowWindow(target_hwnd, SW_HIDE)
+            style = user32.GetWindowLongW(target_hwnd, GWL_EXSTYLE)
+            style = (style & ~WS_EX_APPWINDOW) | WS_EX_TOOLWINDOW
+            user32.SetWindowLongW(target_hwnd, GWL_EXSTYLE, style)
+            user32.SetWindowPos(
+                target_hwnd, None, -2400, -2400, 0, 0,
+                SWP_NOSIZE | SWP_NOACTIVATE | SWP_FRAMECHANGED
+            )
+            user32.ShowWindow(target_hwnd, SW_SHOWNOACTIVATE)
+            return True
+        except Exception:
+            return False
 
-        log.info("🛡️ Chrome movido fuera de pantalla (visible en barra de tareas)")
-    except Exception as e:
-        log.warning(f"⚠️ Error moviendo ventana: {e}")
+    if _apply_hide(hwnd):
+        log.info("🛡️ Chrome oculto de la barra de tareas y movido fuera de pantalla")
+    else:
+        log.warning("⚠️ Error ocultando ventana")
         return
 
-    # 2. Hilo vigilante: si alguien minimiza Chrome, restaurar inmediatamente
+    # Hilo vigilante: verifica que Chrome siga oculto y busca ventanas nuevas
     def _watchdog():
+        current_hwnd = hwnd
         while True:
             try:
-                # IsIconic = True si la ventana está minimizada
-                if user32.IsIconic(hwnd):
-                    user32.ShowWindow(hwnd, SW_RESTORE)
+                # Verificar si el HWND actual sigue siendo válido
+                if not user32.IsWindow(current_hwnd):
+                    # La ventana fue cerrada (reinicio del bot), buscar nueva
+                    if chrome_pid:
+                        found = _find_hwnd_by_pid(chrome_pid)
+                    else:
+                        found = _find_hwnd_by_title()
+                    
+                    if found:
+                        current_hwnd = found[0]
+                        _apply_hide(current_hwnd)
+                        log.debug("🛡️ Nueva ventana Chrome detectada y ocultada")
+                    time.sleep(2)
+                    continue
+                
+                # Si está minimizada, restaurar fuera de pantalla
+                if user32.IsIconic(current_hwnd):
+                    user32.ShowWindow(current_hwnd, SW_RESTORE)
                     user32.SetWindowPos(
-                        hwnd, None, -2400, -2400, 0, 0,
+                        current_hwnd, None, -2400, -2400, 0, 0,
                         SWP_NOSIZE | SWP_NOACTIVATE
                     )
-            except:
+                
+                # Verificar que siga siendo TOOLWINDOW (no APPWINDOW)
+                current_style = user32.GetWindowLongW(current_hwnd, GWL_EXSTYLE)
+                if current_style & WS_EX_APPWINDOW:
+                    current_style = (current_style & ~WS_EX_APPWINDOW) | WS_EX_TOOLWINDOW
+                    user32.SetWindowLongW(current_hwnd, GWL_EXSTYLE, current_style)
+                    user32.SetWindowPos(
+                        current_hwnd, None, 0, 0, 0, 0,
+                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_FRAMECHANGED
+                    )
+            except Exception:
                 break  # La ventana fue cerrada, terminar el hilo
             time.sleep(2)
 

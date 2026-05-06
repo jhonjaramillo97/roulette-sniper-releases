@@ -27,12 +27,14 @@ TABLES = [
 
     # Lote de ruletas regionales
     {"name": "Stake Roulette", "id": "rw321stakerws321-236", "op_id": "236", "table_name": "stake_roulette"},
-    {"name": "Turkish Roulette", "id": "p81lj84prrmxzyic-224", "op_id": "224", "table_name": "turkish_roulette"},
+    {"name": "Turkish Roulette", "id": "p8l1j84prrmxzyic-224", "op_id": "224", "table_name": "turkish_roulette"},
     {"name": "German Roulette", "id": "s2x6b4jdeqza2ge2-222", "op_id": "222", "table_name": "german_roulette"},
-    {"name": "Romanian Roulette", "id": "romania233rw1291-233", "op_id": "233", "table_name": "romanian_roulette"},
+    {"name": "Romanian Roulette", "id": "romania233rwl291-233", "op_id": "233", "table_name": "romanian_roulette"},
     {"name": "Roulette Italia Tricolore", "id": "v1c52fgw7yy02upz-223", "op_id": "223", "table_name": "roulette_italia_tricolore"},
     {"name": "Russian Roulette", "id": "t4jzencinod6iqwi-221", "op_id": "221", "table_name": "russian_roulette"},
-    {"name": "Dutch Roulette", "id": "dutchrw235rw1293-235", "op_id": "235", "table_name": "dutch_roulette"},
+    {"name": "Gates of Olympus Roulette", "id": "gatesofolympus01-2244", "op_id": "2244", "table_name": "gates_of_olympus_roulette"},
+    {"name": "Turkish Mega Roulette", "id": "megar0ul3tt3trk1-208", "op_id": "208", "table_name": "turkish_mega_roulette"},
+    {"name": "Mega Roulette 3000", "id": "megaroulette3k01-2901", "op_id": "2901", "table_name": "mega_roulette_3000"},
 ]
 
 # --- URLs ---
