@@ -6,6 +6,9 @@ let soundEnabled = true;
 let previousAlertCount = 0;  // Para detectar nuevas alertas
 
 let currentThreshold = 12; // Default
+let colorStreakThreshold = 5; // Default
+let filterSignalsOnly = false;
+let alertTimestamps = {}; // { table_name: timestamp } para ordenar
 
 // Inicialización
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,6 +23,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridEl = document.getElementById("overview-grid");
     const iconGrid = document.querySelector(".icon-grid");
     const iconList = document.querySelector(".icon-list");
+
+    // Toggle Filter Signals
+    const btnFilter = document.getElementById("btn-filter-signals");
+    if (btnFilter) {
+        btnFilter.addEventListener("click", () => {
+            filterSignalsOnly = !filterSignalsOnly;
+            gridEl.classList.toggle("filter-signals", filterSignalsOnly);
+            
+            btnFilter.querySelector(".filter-off").style.display = filterSignalsOnly ? "none" : "inline";
+            btnFilter.querySelector(".filter-on").style.display = filterSignalsOnly ? "inline" : "none";
+            
+            // Cambiar estilo del botón cuando está activo
+            if (filterSignalsOnly) {
+                btnFilter.style.background = "rgba(59, 130, 246, 0.1)";
+                btnFilter.style.borderColor = "rgba(59, 130, 246, 0.3)";
+                btnFilter.style.color = "#3b82f6";
+            } else {
+                btnFilter.style.background = "rgba(239, 68, 68, 0.1)";
+                btnFilter.style.borderColor = "rgba(239, 68, 68, 0.3)";
+                btnFilter.style.color = "var(--color-danger)";
+            }
+            
+            // Re-evaluar el orden inmediatamente usando los datos cacheados
+            if (overviewData && overviewData.length > 0) {
+                updateCards(overviewData);
+            }
+        });
+    }
 
     // Leer preferencia guardada (por defecto lista si es móvil, cuadrícula si es PC, o simplemente lista)
     let currentView = localStorage.getItem("dashboardView") || "list-view";
@@ -73,6 +104,9 @@ async function fetchOverview() {
         if (data.threshold) {
             currentThreshold = data.threshold;
         }
+        if (data.color_streak_threshold) {
+            colorStreakThreshold = data.color_streak_threshold;
+        }
 
         renderGrid(data.tables);
 
@@ -107,9 +141,15 @@ async function fetchOverview() {
 function renderGrid(tables) {
     const grid = document.getElementById("overview-grid");
 
-    // Contar alertas totales actuales
+    // Contar alertas totales actuales (tercios + rachas de color)
     let totalAlerts = 0;
-    tables.forEach(t => { totalAlerts += t.alertas.length; });
+    tables.forEach(t => {
+        totalAlerts += t.alertas.length;
+        // Contar señal de color como alerta adicional
+        if (t.color_streak && t.color_streak.streak >= colorStreakThreshold) {
+            totalAlerts += 1;
+        }
+    });
 
     // Sonido si hay nueva alerta
     if (totalAlerts > previousAlertCount && previousAlertCount >= 0 && soundEnabled) {
@@ -131,7 +171,9 @@ function buildCards(grid, tables) {
     grid.innerHTML = "";
     tables.forEach(t => {
         const card = document.createElement("div");
-        card.className = "table-card list-item" + (t.alertas.length > 0 ? " has-alert" : "");
+        const hasColorStreak = t.color_streak && t.color_streak.streak >= colorStreakThreshold;
+        const hasAnyAlert = t.alertas.length > 0 || hasColorStreak;
+        card.className = "table-card list-item" + (hasAnyAlert ? " has-alert" : "") + (hasColorStreak ? " has-color-streak" : "");
         card.dataset.table = t.table_name;
 
         // El clic en la tarjeta entera hace toggle del acordeon SÓLO en vista lista
@@ -179,16 +221,27 @@ function buildCards(grid, tables) {
             ? `<span class="alert-badge pulse">🔴 ${t.alertas.length} Señal${t.alertas.length > 1 ? 'es' : ''}</span>`
             : (t.last_update_seconds > 180 ? `<span class="status-badge warn">⚠️ Inactivo</span>` : `<span class="status-badge safe">✅ Normal</span>`);
 
+        // Badge de racha de color
+        let colorStreakBadge = '';
+        if (t.color_streak && t.color_streak.streak >= colorStreakThreshold) {
+            const isRed = t.color_streak.color === 'Red';
+            const emoji = isRed ? '🔴' : '⚫';
+            const label = isRed ? 'Rojos' : 'Negros';
+            const cls = isRed ? 'red' : 'black';
+            colorStreakBadge = `<span class="color-streak-badge ${cls}">${emoji} ${t.color_streak.streak} ${label}</span>`;
+        }
+
         const historyHTML = getMiniHistoryHTML(t.last_10);
 
         card.innerHTML = `
             <div class="accordion-header">
                 <div class="header-left">
                     <span class="tc-status-dot" style="background:${dotColor}; box-shadow:0 0 8px ${dotColor}"></span>
-                    <span class="tc-name">${t.name}</span>
+                    <span class="tc-name" title="${t.name}">${t.name}</span>
                     <span class="tc-freshness">${formatTimeAgo(t.last_update_seconds)}</span>
                 </div>
                 <div class="header-right">
+                    ${colorStreakBadge}
                     ${alertBadge}
                     <span class="chevron">▼</span>
                 </div>
@@ -210,10 +263,38 @@ function updateCards(tables) {
         const card = document.querySelector(`.table-card[data-table="${t.table_name}"]`);
         if (!card) return;
 
-        if (t.alertas.length > 0) {
+        const hasColorStreak = t.color_streak && t.color_streak.streak >= colorStreakThreshold;
+        const hasAnyAlert = t.alertas.length > 0 || hasColorStreak;
+
+        if (hasAnyAlert) {
             card.classList.add("has-alert");
+            if (!alertTimestamps[t.table_name]) {
+                alertTimestamps[t.table_name] = Date.now();
+            }
         } else {
             card.classList.remove("has-alert");
+            if (alertTimestamps[t.table_name]) {
+                delete alertTimestamps[t.table_name];
+            }
+        }
+        
+        if (hasColorStreak) {
+            card.classList.add("has-color-streak");
+        } else {
+            card.classList.remove("has-color-streak");
+        }
+
+        // Orden de llegada: Señales recientes arriba, PERO SOLO si estamos en la vista "Solo Señales"
+        // Si el filtro está apagado, todo se queda en el orden por defecto (0)
+        if (filterSignalsOnly && alertTimestamps[t.table_name]) {
+            // CSS 'order' usa enteros de 32 bits (límite +- 2.14 mil millones).
+            // Convertimos el timestamp a segundos desde el 1 de enero de 2024 para que sea un número pequeño
+            const epoch2024 = 1704067200;
+            const alertSeconds = Math.floor(alertTimestamps[t.table_name] / 1000) - epoch2024;
+            
+            card.style.order = -alertSeconds;
+        } else {
+            card.style.order = 0;
         }
 
         const dot = card.querySelector(".tc-status-dot");
@@ -240,7 +321,18 @@ function updateCards(tables) {
             const alertBadge = t.alertas.length > 0
                 ? `<span class="alert-badge pulse">🔴 ${t.alertas.length} Señal${t.alertas.length > 1 ? 'es' : ''}</span>`
                 : (t.last_update_seconds > 180 ? `<span class="status-badge warn">⚠️ Inactivo</span>` : `<span class="status-badge safe">✅ Normal</span>`);
-            headerRight.innerHTML = alertBadge + currentChevron;
+            
+            // Badge de racha de color
+            let colorStreakBadge = '';
+            if (t.color_streak && t.color_streak.streak >= colorStreakThreshold) {
+                const isRed = t.color_streak.color === 'Red';
+                const emoji = isRed ? '🔴' : '⚫';
+                const label = isRed ? 'Rojos' : 'Negros';
+                const cls = isRed ? 'red' : 'black';
+                colorStreakBadge = `<span class="color-streak-badge ${cls}">${emoji} ${t.color_streak.streak} ${label}</span>`;
+            }
+            
+            headerRight.innerHTML = colorStreakBadge + alertBadge + currentChevron;
         }
 
 

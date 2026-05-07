@@ -9,7 +9,7 @@ from flask import Flask, jsonify, request, send_from_directory
 # dirname(dirname) = bot_ruleta
 # dirname(dirname(dirname)) = PROYECTO ROOT
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from bot_ruleta.config import TABLES, REDS, load_credentials
+from bot_ruleta.config import TABLES, REDS, load_credentials, get_color_streak_threshold
 from bot_ruleta.gui_credentials import load_saved_credentials
 import bot_ruleta.logic as bt_logic
 
@@ -120,6 +120,11 @@ def get_overview():
             except Exception as e:
                 pass
 
+        # Calcular racha de color
+        color_streak = bt_logic.compute_color_streak(
+            [{"numero": n["numero"], "color": n.get("color", "Green")} for n in nums]
+        ) if nums else {"color": None, "streak": 0}
+
         result.append({
             "name": t["name"],
             "table_name": tn,
@@ -128,14 +133,16 @@ def get_overview():
             "delays": delays,
             "alertas": alertas,
             "ultimo": nums[0]["numero"] if nums else None,
-            "ultimo_color": nums[0].get("color", "Green") if nums else None,  # Fix for db.py tuple change
+            "ultimo_color": nums[0].get("color", "Green") if nums else None,
             "last_10": [{"val": n["numero"], "col": n.get("color", "Green")} for n in nums[:10]] if nums else [],
-            "last_update_seconds": last_update_seconds
+            "last_update_seconds": last_update_seconds,
+            "color_streak": color_streak
         })
 
-    # Estructura: { threshold: 10, tables: [...] }
+    color_thresh = get_color_streak_threshold()
     return jsonify({
         "threshold": threshold,
+        "color_streak_threshold": color_thresh,
         "tables": result
     })
 
@@ -170,12 +177,19 @@ def get_data():
         except Exception as e:
             print(f"Error parsing date {numeros[0]['timestamp']}: {e}")
 
+    # Calcular racha de color
+    color_streak = bt_logic.compute_color_streak(
+        [{"numero": n["numero"], "color": n.get("color", "Green")} for n in numeros]
+    ) if numeros else {"color": None, "streak": 0}
+
     return jsonify({
         "mesa": table_name,
         "ultimos": numeros[:20],
         "delays": delays,
         "alertas": alertas,
         "threshold": threshold,
+        "color_streak": color_streak,
+        "color_streak_threshold": get_color_streak_threshold(),
         "last_update_seconds": last_update_seconds
     })
 
@@ -186,7 +200,7 @@ def get_backtest():
     if not any(t["table_name"] == table_name for t in TABLES):
         return jsonify({"error": "Tabla no válida"}), 400
 
-    _, _, _, _, threshold, _ = load_credentials()
+    threshold = get_dashboard_threshold()
     
     # 1. Sincronizar (procesar giros nuevos)
     try:
@@ -210,28 +224,74 @@ def get_backtest():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/api/backtest_color')
+def get_backtest_color():
+    """Historial de rachas de color completadas para una mesa."""
+    table_name = request.args.get('mesa', 'ruleta_latina')
+    if not any(t["table_name"] == table_name for t in TABLES):
+        return jsonify({"error": "Tabla no válida"}), 400
+
+    color_threshold = get_color_streak_threshold()
+    
+    # 1. Sincronizar
+    try:
+        bt_logic.sync_color_backtest(table_name, color_threshold)
+    except Exception as e:
+        print(f"Error en sync_color_backtest: {e}")
+        
+    # 2. Leer historial
+    try:
+        conn = get_db_connection()
+        cursor = conn.execute(
+            "SELECT streak_color, streak_count, start_time, end_time FROM color_streak_history WHERE table_name = ? ORDER BY id DESC LIMIT 100",
+            (table_name,)
+        )
+        rows = cursor.fetchall()
+        conn.close()
+        
+        history = [dict(row) for row in rows]
+        return jsonify({"mesa": table_name, "history": history})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/api/analisis_global')
 def get_analisis_global():
     threshold = get_dashboard_threshold()
+    color_threshold = get_color_streak_threshold()
     
     # 1. Sincronizar TODAS las mesas para asegurar datos frescos
     try:
         for t in TABLES:
             bt_logic.sync_backtest(t["table_name"], threshold)
+            bt_logic.sync_color_backtest(t["table_name"], color_threshold)
     except Exception as e:
-        print(f"Error en sync_backtest global: {e}")
+        print(f"Error en sync global: {e}")
         
-    # 2. Extraer todo el historial completo
+    # 2. Extraer historial de tercios
     try:
         conn = get_db_connection()
         cursor = conn.execute(
             "SELECT table_name, zone_name, start_time, end_time, max_delay FROM backtest_history ORDER BY id DESC"
         )
         rows = cursor.fetchall()
+        history = [dict(row) for row in rows]
+        
+        # 3. Extraer historial de rachas de color
+        cursor2 = conn.execute(
+            "SELECT table_name, streak_color, streak_count, start_time, end_time FROM color_streak_history ORDER BY id DESC"
+        )
+        color_rows = cursor2.fetchall()
+        color_history = [dict(row) for row in color_rows]
+        
         conn.close()
         
-        history = [dict(row) for row in rows]
-        return jsonify({"history": history, "threshold": threshold})
+        return jsonify({
+            "history": history,
+            "color_history": color_history,
+            "threshold": threshold,
+            "color_streak_threshold": color_threshold
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

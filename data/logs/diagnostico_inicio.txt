@@ -1,12 +1,12 @@
 ============================================================
   🔍 DIAGNÓSTICO DE ENTORNO
-  Fecha: 2026-05-05 09:28:34
+  Fecha: 2026-05-06 14:08:29
 ============================================================
   OS:                    Windows 11 (10.0.26200)
   Python:                3.14.0 (D:\GITHUBB\bot_stake\venv\Scripts\python.exe)
   Chrome:                147.0.7727.138
   RAM:                   psutil no instalado (instalar para más info)
-  Disco Libre:           37.8 GB de 133.3 GB
+  Disco Libre:           37.7 GB de 133.3 GB
   .env:                  ✅ Encontrado
     Email:               jva***@gmail.com
     Password:            ✅ Presente

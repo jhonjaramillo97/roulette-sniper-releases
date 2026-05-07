@@ -150,6 +150,117 @@ def send_telegram_msg(token, chat_id, text):
         print(f"❌ Error enviando Telegram: {e}")
         return False
 
+
+# ─── SEÑALES DE RACHAS DE COLOR (ROJOS/NEGROS) ───────────────────────
+
+def compute_color_streak(numeros):
+    """
+    Calcula la racha actual de un color (Rojo o Negro) basándose en los números recientes.
+    El verde (0) es un comodín: suma a la racha sin romperla.
+    Retorna un dict: {"color": "Red"|"Black", "streak": int}
+    """
+    streak_color = None
+    streak_count = 0
+    greens_at_start = 0
+    
+    for item in numeros:
+        # Extraer color del item
+        if hasattr(item, '__getitem__') and not isinstance(item, (str, bytes, int)):
+            try:
+                color = item.get('color', item.get('col', ''))
+                n = item.get('numero', item.get('val', -1))
+            except:
+                continue
+        else:
+            continue
+        
+        # Marcador de cadena rota — detener
+        if n == -1:
+            break
+        
+        # Verde (0) = comodín, suma a la racha
+        if color == "Green" or n == 0:
+            if streak_color is None:
+                greens_at_start += 1
+            else:
+                streak_count += 1
+            continue
+        
+        if color not in ("Red", "Black"):
+            continue
+        
+        if streak_color is None:
+            # Primer color real encontrado — inicia la racha
+            streak_color = color
+            streak_count = 1 + greens_at_start
+        elif color == streak_color:
+            # Mismo color — la racha sigue
+            streak_count += 1
+        else:
+            # Color opuesto — la racha se rompe, ya no necesitamos seguir
+            break
+    
+    return {"color": streak_color, "streak": streak_count}
+
+
+def check_and_notify_color(table_name, streak_data, history=None):
+    """
+    Si la racha de color supera el umbral, envía notificación a Telegram.
+    Usa cooldown independiente con cache key 'tablename_color_Red/Black'.
+    """
+    global _alert_cache
+    
+    from bot_ruleta.config import get_color_streak_threshold
+    
+    color = streak_data.get("color")
+    streak = streak_data.get("streak", 0)
+    threshold = get_color_streak_threshold()
+    
+    if not color or streak < threshold:
+        return
+    
+    _, _, token, chat_id, _, _ = load_credentials()
+    if not token or not chat_id:
+        return
+    
+    cache_key = f"{table_name}_color_{color}"
+    last_time = _alert_cache.get(cache_key, 0)
+    
+    if time.time() - last_time > ALERT_COOLDOWN:
+        # Emoji según color
+        color_emoji = "🔴" if color == "Red" else "⚫"
+        color_name = "Rojos" if color == "Red" else "Negros"
+        opposite = "Negro" if color == "Red" else "Rojo"
+        
+        # Historial visual
+        hist_str = ""
+        if history:
+            recent_10 = history[:10]
+            chips = []
+            for item in reversed(recent_10):
+                n = item.get("numero", item.get("val", "?"))
+                c = item.get("color", item.get("col", ""))
+                if c == "Red":
+                    chips.append(f"🔴{n}")
+                elif c == "Black":
+                    chips.append(f"⚫{n}")
+                else:
+                    chips.append(f"🟢{n}")
+            hist_str = " ".join(chips)
+        
+        msg = (
+            f"🎰 *{table_name}*\n\n"
+            f"{color_emoji} Racha: *{streak} {color_name}* consecutivos\n"
+            f"💡 Señal para apostar al *{opposite}*"
+        )
+        if hist_str:
+            msg += f"\n\n📊 *Últimos giros:*\n{hist_str}"
+        
+        if send_telegram_msg(token, chat_id, msg):
+            print(f"✅ Alerta de color enviada: {table_name} - {streak} {color_name}")
+            _alert_cache[cache_key] = time.time()
+
+
 from datetime import datetime
 from bot_ruleta.db import get_connection
 
@@ -269,6 +380,105 @@ def sync_backtest(table_name, threshold):
     # 3. Guardar estado incremental
     cursor.execute("""
         REPLACE INTO sync_state (table_name, last_game_id) 
+        VALUES (?, ?)
+    """, (table_name, max_id_procesado))
+    
+    conn.commit()
+    conn.close()
+
+
+def sync_color_backtest(table_name, threshold):
+    """
+    Sincroniza el historial de rachas de color para una mesa.
+    Detecta rachas de rojos/negros consecutivos (verde = comodín).
+    Solo procesa giros nuevos usando un buffer de warmup.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # 1. Obtener último estado
+    cursor.execute("SELECT last_game_id FROM color_sync_state WHERE table_name = ?", (table_name,))
+    row = cursor.fetchone()
+    last_game_id = row[0] if row else 0
+    
+    # 2. Leer giros nuevos + buffer
+    warmup = 50
+    cursor.execute(f"SELECT id, numero, color, timestamp FROM {table_name} WHERE id > ? ORDER BY id ASC", (max(0, last_game_id - warmup),))
+    rows = cursor.fetchall()
+    
+    if not rows:
+        conn.close()
+        return
+
+    # Estado de la racha actual
+    current_color = None   # "Red" o "Black"
+    current_count = 0
+    current_start_ts = None
+    active_is_new = False  # Si la racha empezó en datos nuevos
+    max_id_procesado = last_game_id
+    last_ts = None
+
+    def _save_streak(end_timestamp, is_end_new):
+        """Guarda la racha si supera el threshold."""
+        nonlocal current_color, current_count, current_start_ts, active_is_new
+        if current_color and current_count >= threshold and (active_is_new or is_end_new):
+            cursor.execute("""
+                INSERT INTO color_streak_history 
+                (table_name, streak_color, streak_count, start_time, end_time, threshold_used)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (table_name, current_color, current_count, current_start_ts, end_timestamp, threshold))
+
+    for row in rows:
+        db_id, n, color, ts = row
+        max_id_procesado = max(max_id_procesado, db_id)
+        is_new_row = db_id > last_game_id
+        last_ts = ts
+
+        # Cadena rota
+        if n == -1:
+            _save_streak(ts, is_new_row)
+            current_color = None
+            current_count = 0
+            current_start_ts = None
+            active_is_new = False
+            continue
+
+        # Verde = comodín, suma a la racha
+        if color == "Green" or n == 0:
+            if current_color is not None:
+                current_count += 1
+                if is_new_row:
+                    active_is_new = True
+            continue
+
+        if color not in ("Red", "Black"):
+            continue
+
+        if current_color is None:
+            # Inicio de racha
+            current_color = color
+            current_count = 1
+            current_start_ts = ts
+            active_is_new = is_new_row
+        elif color == current_color:
+            # Racha sigue
+            current_count += 1
+            if is_new_row:
+                active_is_new = True
+        else:
+            # Color opuesto: la racha anterior terminó
+            _save_streak(ts, is_new_row)
+            # Empezar nueva racha con el color actual
+            current_color = color
+            current_count = 1
+            current_start_ts = ts
+            active_is_new = is_new_row
+
+    # No guardar la racha activa al final (aún está en progreso)
+
+    # 3. Guardar estado incremental
+    cursor.execute("""
+        REPLACE INTO color_sync_state (table_name, last_game_id) 
         VALUES (?, ?)
     """, (table_name, max_id_procesado))
     

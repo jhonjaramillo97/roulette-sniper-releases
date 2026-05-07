@@ -72,6 +72,28 @@ def init_db():
         )
     """)
 
+    # Tabla global para historial de rachas de color (señales completadas)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS color_streak_history (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            table_name      TEXT NOT NULL,
+            streak_color    TEXT NOT NULL,
+            streak_count    INTEGER NOT NULL,
+            start_time      TEXT NOT NULL,
+            end_time        TEXT,
+            threshold_used  INTEGER NOT NULL
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_color_streak_table ON color_streak_history(table_name)")
+
+    # Tabla para estado de sincronización de rachas de color
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS color_sync_state (
+            table_name      TEXT PRIMARY KEY,
+            last_game_id    INTEGER NOT NULL
+        )
+    """)
+
     conn.commit()
     conn.close()
     print("✅ Tablas verificadas/creadas.")
@@ -126,7 +148,7 @@ def obtener_ultimo_numero(mesa_nombre):
 
 
 def obtener_ultimos_numeros(mesa_nombre, limit=15):
-    """Obtiene los últimos N registros (número y timestamp)."""
+    """Obtiene los últimos N registros (número, color y timestamp)."""
     table_name = _resolve_table_name(mesa_nombre)
     if not table_name:
         return []
@@ -134,10 +156,10 @@ def obtener_ultimos_numeros(mesa_nombre, limit=15):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute(f"SELECT numero, timestamp FROM {table_name} ORDER BY id DESC LIMIT ?", (limit,))
+        cursor.execute(f"SELECT numero, color, timestamp FROM {table_name} ORDER BY id DESC LIMIT ?", (limit,))
         rows = cursor.fetchall()
         conn.close()
-        return [{"numero": r[0], "timestamp": r[1]} for r in rows]
+        return [{"numero": r[0], "color": r[1], "timestamp": r[2]} for r in rows]
     except Exception as e:
         print(f"Error obtener_ultimos_numeros: {e}")
         return []

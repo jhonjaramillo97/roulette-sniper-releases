@@ -254,6 +254,10 @@ def _run_single_session(email, password, headless=True, stop_event=None):
                                     delays = bt_logic.compute_delays(history)
                                     bt_logic.check_and_notify(nombre, delays, history)
                                     log.debug(f"TG check: {nombre} Delays={delays}")
+                                    
+                                    # Señales de color (rachas rojos/negros)
+                                    streak_data = bt_logic.compute_color_streak(history)
+                                    bt_logic.check_and_notify_color(nombre, streak_data, history)
                             except Exception as e:
                                 log.error(f"Error TG: {e}")
 

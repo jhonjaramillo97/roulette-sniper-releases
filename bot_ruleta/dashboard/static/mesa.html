@@ -87,27 +87,61 @@
 
         </div>
 
-        <!-- Backtesting Section (Historial de Señales) -->
+        <!-- Color Streak Indicator -->
+        <div id="color-streak-banner" class="color-streak-banner" style="display:none;">
+            <span id="color-streak-text"></span>
+        </div>
+
+        <!-- Backtesting Section (Historial de Señales) con Tabs -->
         <section class="backtest-section">
             <div class="backtest-header">
                 <h2>📜 Historial de Señales Detectadas</h2>
+                <div class="tab-group" id="backtest-tabs">
+                    <button class="tab-btn active" data-tab="tercios">Tercios</button>
+                    <button class="tab-btn" data-tab="colores">Rojos / Negros</button>
+                </div>
             </div>
-            <div class="table-container">
-                <table class="backtest-table">
-                    <thead>
-                        <tr>
-                            <th>Fecha Inicio</th>
-                            <th>Zona</th>
-                            <th>Delay alcanzado (Pico)</th>
-                            <th>Ganó en</th>
-                        </tr>
-                    </thead>
-                    <tbody id="backtest-body">
-                        <tr>
-                            <td colspan="4" class="loading-td">Cargando historial...</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <!-- Tabla de Tercios -->
+            <div class="tab-panel active" id="panel-tercios">
+                <div class="table-container">
+                    <table class="backtest-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Inicio</th>
+                                <th>Zona</th>
+                                <th>Delay alcanzado (Pico)</th>
+                                <th>Ganó en</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backtest-body">
+                            <tr>
+                                <td colspan="4" class="loading-td">Cargando historial...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tabla de Rachas de Color -->
+            <div class="tab-panel" id="panel-colores">
+                <div class="table-container">
+                    <table class="backtest-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Inicio</th>
+                                <th>Color</th>
+                                <th>Racha (consecutivos)</th>
+                                <th>Terminó en</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backtest-color-body">
+                            <tr>
+                                <td colspan="4" class="loading-td">Cargando historial...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 

@@ -176,6 +176,20 @@ select {
     cursor: pointer;
 }
 
+.list-view .table-card {
+    height: 60px;
+    padding: 0 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* ── Filter Signals Mode ── */
+.overview-grid.filter-signals .table-card:not(.has-alert):not(.has-color-streak) {
+    display: none !important;
+}
+
+/* ── Status Colors ── */
+
 .btn-icon {
     background: none;
     border: none;
@@ -526,7 +540,7 @@ footer {
 
 /* ── MODO CUADRÍCULA (Grid Clásico) ── */
 .overview-grid.grid-view {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     max-width: 100%;
     /* Aprovechar toda la pantalla */
 }
@@ -928,4 +942,123 @@ footer {
     color: var(--text-secondary);
     font-style: italic;
     padding: 2rem !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLOR STREAK BADGES — Señales de rachas rojos/negros
+   ═══════════════════════════════════════════════════════════════ */
+
+.color-streak-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+    white-space: nowrap;
+    animation: colorStreakPulse 2s ease-in-out infinite;
+}
+
+.color-streak-badge.red {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #ff6b6b;
+    text-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
+}
+
+.color-streak-badge.black {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes colorStreakPulseRed {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+        border-color: rgba(239, 68, 68, 0.4);
+        background-color: rgba(239, 68, 68, 0.02);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+        border-color: rgba(239, 68, 68, 0.8);
+        background-color: rgba(239, 68, 68, 0.1);
+        transform: scale(1.02);
+    }
+}
+
+/* Card border when color streak is active */
+.table-card.has-color-streak {
+    animation: colorStreakPulseRed 1.5s infinite;
+}
+
+/* ── Color Streak Banner (Mesa Detail Page) ── */
+.color-streak-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    margin: 1rem auto;
+    max-width: 700px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    animation: colorStreakPulse 2s ease-in-out infinite;
+    gap: 0.5rem;
+}
+
+.color-streak-banner.streak-red {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ff6b6b;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+.color-streak-banner.streak-black {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #e0e0e0;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TAB SYSTEM — Pestañas para cambiar entre vistas
+   ═══════════════════════════════════════════════════════════════ */
+
+.tab-group {
+    display: flex;
+    gap: 0.25rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.tab-btn {
+    padding: 0.4rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
 }

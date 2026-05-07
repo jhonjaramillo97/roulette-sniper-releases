@@ -34,6 +34,21 @@
             padding-bottom: 0.5rem;
         }
 
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-header h3 {
+            margin: 0;
+            border: none;
+            padding: 0;
+        }
+
         .stats-summary {
             display: flex;
             justify-content: space-around;
@@ -116,6 +131,14 @@
             <div>Procesando el 100% de la Base de Datos...</div>
         </div>
 
+        <!-- Global Toggle para Análisis -->
+        <div class="backtest-header" style="justify-content: center; margin-bottom: 2rem; display: none;" id="global-toggle-container">
+            <div class="tab-group" id="global-tabs" style="transform: scale(1.1);">
+                <button class="tab-btn active" data-view="tercios">Estadísticas de Tercios</button>
+                <button class="tab-btn" data-view="colores">Estadísticas de Rojos / Negros</button>
+            </div>
+        </div>
+
         <!-- Resumen de Stats Numéricos -->
         <div class="stats-summary" id="stats-container" style="display: none;">
             <div class="stat-box">
@@ -132,42 +155,66 @@
             </div>
         </div>
 
-        <!-- Gráficos -->
+        <!-- Gráfico con Tabs -->
         <div class="analytics-grid" id="charts-container" style="display: none;">
-            <div class="chart-card">
-                <h3>Volumen de Señales</h3>
-                <canvas id="chartVolume"></canvas>
-            </div>
-            <div class="chart-card">
-                <h3>Top 10 Rachas identificadas</h3>
-                <canvas id="chartTop10"></canvas>
+            <div class="chart-card" style="grid-column: 1 / -1;">
+                <div class="chart-header">
+                    <h3 id="chart-title">Top 20 Rachas identificadas</h3>
+                </div>
+                <div id="chart-panel-tercios" class="tab-panel active">
+                    <canvas id="chartTop20Tercios"></canvas>
+                </div>
+                <div id="chart-panel-colores" class="tab-panel">
+                    <canvas id="chartTop20Color"></canvas>
+                </div>
             </div>
         </div>
 
-        <!-- Tablas de Datos -->
+        <!-- Tablas de Datos con Tabs -->
         <div class="analytics-grid" id="tables-container" style="display: none;">
             <div class="backtest-section" style="margin-top:0; width: 100%; max-width: 100%;">
                 <div class="backtest-header">
-                    <h2>🏆 Top 10 Señales Más Críticas</h2>
+                    <h2 id="top-signals-title">🏆 Top 20 Señales Más Críticas</h2>
                 </div>
-                <div class="table-container">
-                    <table class="backtest-table">
-                        <thead>
-                            <tr>
-                                <th>Mesa</th>
-                                <th>Zona</th>
-                                <th>Pico Alcanzado</th>
-                                <th>Fecha Fin</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody-top10"></tbody>
-                    </table>
+
+                <!-- Panel Tercios -->
+                <div class="tab-panel active" id="signals-panel-tercios">
+                    <div class="table-container">
+                        <table class="backtest-table">
+                            <thead>
+                                <tr>
+                                    <th>Mesa</th>
+                                    <th>Zona</th>
+                                    <th>Pico Alcanzado</th>
+                                    <th>Fecha Fin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-top20"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel Colores -->
+                <div class="tab-panel" id="signals-panel-colores">
+                    <div class="table-container">
+                        <table class="backtest-table">
+                            <thead>
+                                <tr>
+                                    <th>Mesa</th>
+                                    <th>Color</th>
+                                    <th>Racha (consecutivos)</th>
+                                    <th>Fecha Fin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-top20-color"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <div class="backtest-section" style="margin-top:0; width: 100%; max-width: 100%;">
                 <div class="backtest-header">
-                    <h2>📊 Desglose por Mesa</h2>
+                    <h2 id="breakdown-title">📊 Desglose por Mesa</h2>
                 </div>
                 <div class="table-container">
                     <table class="backtest-table">
@@ -179,7 +226,11 @@
                                 <th>Pico Máximo</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-tables"></tbody>
+                        <!-- Panel Tercios (Desglose) -->
+                        <tbody id="tbody-tables-tercios"></tbody>
+                        
+                        <!-- Panel Colores (Desglose) -->
+                        <tbody id="tbody-tables-colores" style="display: none;"></tbody>
                     </table>
                 </div>
             </div>

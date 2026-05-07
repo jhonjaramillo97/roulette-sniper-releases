@@ -440,13 +440,21 @@ class LoginScreen(ctk.CTkFrame):
         self.chk_remember.select()
         self.chk_remember.pack(side="right")
 
-        # Settings
-        self.lbl_threshold = ctk.CTkLabel(self.form, text="Alerta a partir de: 12 giros sin salir", font=ctk.CTkFont(size=12), text_color="gray")
+        # Settings — Threshold de tercios
+        self.lbl_threshold = ctk.CTkLabel(self.form, text="Alerta tercios: 12 giros sin salir", font=ctk.CTkFont(size=12), text_color="gray")
         self.lbl_threshold.pack(anchor="center", pady=(0, 5))
         
         self.slider_thresh = ctk.CTkSlider(self.form, from_=5, to=25, number_of_steps=20, width=320, command=self.update_thresh_lbl, progress_color="#00C853", button_color="#00C853")
         self.slider_thresh.set(12)
-        self.slider_thresh.pack(anchor="center", pady=(0, 20))
+        self.slider_thresh.pack(anchor="center", pady=(0, 12))
+
+        # Settings — Threshold de racha de color
+        self.lbl_color_thresh = ctk.CTkLabel(self.form, text="Señal racha color: 5 consecutivos", font=ctk.CTkFont(size=12), text_color="gray")
+        self.lbl_color_thresh.pack(anchor="center", pady=(0, 5))
+        
+        self.slider_color_thresh = ctk.CTkSlider(self.form, from_=3, to=15, number_of_steps=12, width=320, command=self.update_color_thresh_lbl, progress_color="#FF6B6B", button_color="#FF6B6B")
+        self.slider_color_thresh.set(5)
+        self.slider_color_thresh.pack(anchor="center", pady=(0, 20))
 
         # Button (Pill shaped)
         self.btn_start = ctk.CTkButton(self.form, text="INICIAR BOT", width=320, height=50, 
@@ -469,6 +477,10 @@ class LoginScreen(ctk.CTkFrame):
             self.slider_thresh.set(thresh)
             self.update_thresh_lbl(thresh)
             
+            color_thresh = creds.get("color_streak_threshold", 5)
+            self.slider_color_thresh.set(color_thresh)
+            self.update_color_thresh_lbl(color_thresh)
+            
             if not creds.get("headless", True):
                 self.chk_headless.deselect()
             
@@ -476,7 +488,10 @@ class LoginScreen(ctk.CTkFrame):
                 self.chk_diagnostics.select()
 
     def update_thresh_lbl(self, val):
-        self.lbl_threshold.configure(text=f"Alerta a partir de: {int(val)} giros sin salir")
+        self.lbl_threshold.configure(text=f"Alerta tercios: {int(val)} giros sin salir")
+
+    def update_color_thresh_lbl(self, val):
+        self.lbl_color_thresh.configure(text=f"Señal racha color: {int(val)} consecutivos")
 
     def start_bot(self):
         email = self.ent_email.get().strip()
@@ -484,6 +499,7 @@ class LoginScreen(ctk.CTkFrame):
         tg_token = self.ent_token.get().strip()
         tg_chat_id = self.ent_chat_id.get().strip()
         threshold = int(self.slider_thresh.get())
+        color_streak_threshold = int(self.slider_color_thresh.get())
         headless = bool(self.chk_headless.get())
         diagnostics = bool(self.chk_diagnostics.get())
 
@@ -493,7 +509,7 @@ class LoginScreen(ctk.CTkFrame):
 
         # Handle saving
         if self.chk_remember.get():
-            save_credentials(email, password, tg_token, tg_chat_id, threshold, headless, diagnostics)
+            save_credentials(email, password, tg_token, tg_chat_id, threshold, headless, diagnostics, color_streak_threshold)
         else:
             delete_saved_credentials()
 
@@ -504,7 +520,8 @@ class LoginScreen(ctk.CTkFrame):
             tg_token=tg_token, 
             tg_chat_id=tg_chat_id, 
             threshold=threshold, 
-            headless=headless
+            headless=headless,
+            color_streak_threshold=color_streak_threshold
         )
         
         # Aplicar toggle de diagnósticos al logger

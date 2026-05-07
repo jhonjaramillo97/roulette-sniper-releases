@@ -35,7 +35,21 @@ document.addEventListener("DOMContentLoaded", () => {
         // Limpiar UI
         document.querySelectorAll(".counter-value").forEach(el => el.textContent = "--");
         document.getElementById('backtest-body').innerHTML = '<tr><td colspan="4" class="loading-td">Cargando historial...</td></tr>';
-        fetchBacktest(); // Carga inmediata al cambiar de mesa
+        document.getElementById('backtest-color-body').innerHTML = '<tr><td colspan="4" class="loading-td">Cargando historial...</td></tr>';
+        fetchBacktest();
+        fetchColorBacktest();
+    });
+
+    // Tab switching para historial
+    document.querySelectorAll('#backtest-tabs .tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const tab = btn.dataset.tab;
+            document.querySelectorAll('#backtest-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + tab).classList.add('active');
+        });
     });
 });
 
@@ -60,8 +74,10 @@ async function loadTables() {
 function startPolling() {
     updateDashboard();
     fetchBacktest();
+    fetchColorBacktest();
     setInterval(updateDashboard, POLLING_INTERVAL);
-    setInterval(fetchBacktest, 5000); // Polling más relajado para historial
+    setInterval(fetchBacktest, 5000);
+    setInterval(fetchColorBacktest, 5000);
 }
 
 async function fetchBacktest() {
@@ -108,6 +124,40 @@ async function fetchBacktest() {
     }
 }
 
+async function fetchColorBacktest() {
+    try {
+        const res = await fetch(`/api/backtest_color?mesa=${currentTable}`);
+        if (!res.ok) return;
+        const data = await res.json();
+
+        const tbody = document.getElementById('backtest-color-body');
+        tbody.innerHTML = '';
+
+        if (!data.history || data.history.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="loading-td">No hay historial de rachas de color registrado aún.</td></tr>';
+            return;
+        }
+
+        data.history.forEach(evt => {
+            const tr = document.createElement('tr');
+            const isRed = evt.streak_color === 'Red';
+            const emoji = isRed ? '🔴' : '⚫';
+            const colorLabel = isRed ? 'Rojos' : 'Negros';
+            const end = evt.end_time ? (evt.end_time.split(' ')[1] || evt.end_time) : 'En progreso';
+
+            tr.innerHTML = `
+                <td>${evt.start_time.slice(5, 16)}</td>
+                <td><span class="color-streak-badge ${isRed ? 'red' : 'black'}">${emoji} ${colorLabel}</span></td>
+                <td class="max-delay-col" style="color: ${isRed ? '#ff6b6b' : '#e0e0e0'}">${evt.streak_count} consecutivos</td>
+                <td>${end}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (e) {
+        console.error("Error cargando color backtest:", e);
+    }
+}
+
 async function updateDashboard() {
     try {
         const res = await fetch(`${API_URL}?mesa=${currentTable}`);
@@ -147,6 +197,24 @@ async function updateDashboard() {
 
         // Actualizar historial
         renderHistory(data.ultimos);
+
+        // Señal de racha de color
+        const banner = document.getElementById("color-streak-banner");
+        const bannerText = document.getElementById("color-streak-text");
+        const csThreshold = data.color_streak_threshold || 5;
+        
+        if (data.color_streak && data.color_streak.streak >= csThreshold) {
+            const isRed = data.color_streak.color === "Red";
+            const emoji = isRed ? "🔴" : "⚫";
+            const colorName = isRed ? "Rojos" : "Negros";
+            const opposite = isRed ? "Negro" : "Rojo";
+            
+            banner.style.display = "flex";
+            banner.className = "color-streak-banner " + (isRed ? "streak-red" : "streak-black");
+            bannerText.innerHTML = `${emoji} <strong>${data.color_streak.streak} ${colorName}</strong> consecutivos — Señal para apostar al <strong>${opposite}</strong>`;
+        } else {
+            banner.style.display = "none";
+        }
 
         // Sonido si hay alerta activa (DESACTIVADO EN DETALLE, SOLO EN OVERVIEW)
         // if (alertTriggered && soundEnabled) {

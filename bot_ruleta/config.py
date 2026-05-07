@@ -50,6 +50,9 @@ AFK_INTERVAL = 300  # segundos (300 = 5 min producción)
 REDS = ['1', '3', '5', '7', '9', '12', '14', '16', '18',
         '19', '21', '23', '25', '27', '30', '32', '34', '36']
 
+# --- SEÑALES DE RACHA DE COLOR ---
+COLOR_STREAK_THRESHOLD = 5  # Default: señal a partir de 5 consecutivos del mismo color
+
 # --- RUNTIME OVERRIDES (set by GUI) ---
 _runtime_overrides = {}
 
@@ -122,3 +125,34 @@ def load_credentials():
     
     return email, password, tg_token, tg_chat_id, alert_threshold, headless
 
+
+def get_color_streak_threshold():
+    """Lee el umbral de racha de color. Prioridad: runtime overrides > GUI saved > .env > default.
+    Independiente de load_credentials() para no romper call sites existentes."""
+    # 1. Runtime overrides (GUI en sesión activa)
+    if 'color_streak_threshold' in _runtime_overrides:
+        return _runtime_overrides['color_streak_threshold']
+    
+    # 2. Credenciales guardadas por la GUI
+    try:
+        from bot_ruleta.gui_credentials import load_saved_credentials
+        saved = load_saved_credentials()
+        if saved and 'color_streak_threshold' in saved:
+            return saved['color_streak_threshold']
+    except Exception:
+        pass
+    
+    # 3. Variable de entorno (.env)
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+    try:
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("COLOR_STREAK_THRESHOLD="):
+                    val = line.split("=", 1)[1].split("#")[0].strip()
+                    return int(val)
+    except Exception:
+        pass
+    
+    # 4. Default
+    return COLOR_STREAK_THRESHOLD

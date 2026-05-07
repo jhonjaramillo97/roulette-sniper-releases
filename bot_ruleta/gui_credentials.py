@@ -30,7 +30,7 @@ def _xor_bytes(data: bytes, key: bytes) -> bytes:
     return bytes(d ^ key[i % len(key)] for i, d in enumerate(data))
 
 
-def save_credentials(email, password, tg_token, tg_chat_id, threshold, headless, diagnostics=False):
+def save_credentials(email, password, tg_token, tg_chat_id, threshold, headless, diagnostics=False, color_streak_threshold=5):
     """Guarda credenciales ofuscadas en disco."""
     os.makedirs(os.path.dirname(_CRED_FILE), exist_ok=True)
     data = json.dumps({
@@ -41,6 +41,7 @@ def save_credentials(email, password, tg_token, tg_chat_id, threshold, headless,
         "threshold": threshold,
         "headless": headless,
         "diagnostics": diagnostics,
+        "color_streak_threshold": color_streak_threshold,
     }).encode("utf-8")
     encrypted = _xor_bytes(data, _get_key())
     with open(_CRED_FILE, "wb") as f:
