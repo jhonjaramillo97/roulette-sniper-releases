@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Build / Dist
+build/
+dist/
+*.spec
+
+# Database / Data
+*.db
+bot_ruleta/data/*.db
+data/ruleta.db
+data/tunnel.txt
+data/credentials.dat
+
+# Logs
+logs/
+data/logs/
+bot_ruleta/logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
