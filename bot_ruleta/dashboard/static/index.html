@@ -28,49 +28,22 @@
     <div class="overview-header">
         <img src="logo.png" alt="Roulette Sniper" style="max-height: 80px; margin-bottom: 0px;">
         <p>Monitoreo en tiempo real — Click en una mesa para ver detalles</p>
-        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-            <a href="/analisis" class="btn-analisis"
-                style="display:inline-block; padding:0.5rem 1.5rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-primary); text-decoration:none; border-radius:8px; font-weight:600; transition:0.3s;">📊
-                Análisis Global</a>
+        <div class="header-actions">
+            <a href="/analisis" class="btn-modern btn-analisis">
+                📊 Análisis Global
+            </a>
 
-            <button id="btn-view-toggle" class="btn-view-toggle" title="Cambiar Vista"
-                style="display:inline-flex; align-items:center; justify-content:center; padding:0.5rem 1rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-primary); border-radius:8px; font-weight:600; cursor:pointer; transition:0.3s;">
+            <button id="btn-view-toggle" class="btn-modern btn-view" title="Cambiar Vista">
                 <span class="icon-grid" style="display:none;">🔲 Cuadrícula</span>
                 <span class="icon-list">📋 Lista</span>
             </button>
 
-            <button id="btn-filter-signals" title="Filtrar por Señales"
-                style="display:inline-flex; align-items:center; justify-content:center; padding:0.5rem 1rem; background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.3); color:var(--color-danger); border-radius:8px; font-weight:600; cursor:pointer; transition:0.3s;">
+            <button id="btn-filter-signals" class="btn-modern btn-filter" title="Filtrar por Señales">
                 <span class="filter-off">🔴 Solo Señales</span>
                 <span class="filter-on" style="display:none;">🔵 Mostrar Todas</span>
             </button>
-
-            <!-- Botón del Link Remoto (Oculto por defecto hasta cargarlo) -->
-            <button id="btn-remote-link" title="Copiar Link Remoto"
-                style="display:none; align-items:center; justify-content:center; padding:0.5rem 1rem; background:rgba(246,130,31,0.15); border:1px solid rgba(246,130,31,0.4); color:#f6821f; border-radius:8px; font-weight:600; cursor:pointer; transition:0.3s;">
-                <span>🌐 Link Remoto</span>
-            </button>
         </div>
     </div>
-
-    <script>
-        // Checkear si hay link remoto disponible
-        fetch('/api/tunnel')
-            .then(r => r.json())
-            .then(data => {
-                if(data.url) {
-                    const btn = document.getElementById('btn-remote-link');
-                    btn.style.display = 'inline-flex';
-                    btn.onclick = () => {
-                        navigator.clipboard.writeText(data.url);
-                        const oldText = btn.innerHTML;
-                        btn.innerHTML = '<span>✅ ¡Copiado!</span>';
-                        setTimeout(() => btn.innerHTML = oldText, 2000);
-                    };
-                }
-            })
-            .catch(e => console.log('No remote link found'));
-    </script>
 
     <div class="overview-grid" id="overview-grid">
         <!-- Cards generadas por JS -->
@@ -79,7 +52,7 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=5"></script>
 </body>
 
 </html>

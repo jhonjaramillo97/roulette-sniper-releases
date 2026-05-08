@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchGlobalData();
+    setupModal();
 });
 
 let globalData = { history: [], color_history: [], threshold: 5, color_threshold: 5 };
+let currentTopLimit = 20;
+let chartTerciosInstance = null;
+let chartColorInstance = null;
 
 function setupGlobalTabs() {
     document.querySelectorAll('#global-tabs .tab-btn').forEach(btn => {
@@ -27,6 +31,18 @@ function setupGlobalTabs() {
             updateViewContext(view);
         });
     });
+
+    document.querySelectorAll('#top-limit-tabs .tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#top-limit-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentTopLimit = parseInt(btn.dataset.limit, 10);
+            
+            // Re-render con el nuevo limite
+            processAndRender(globalData.history, globalData.color_history);
+        });
+    });
 }
 
 function updateViewContext(view) {
@@ -34,12 +50,12 @@ function updateViewContext(view) {
     
     // Títulos
     document.getElementById('chart-title').textContent = isTercios 
-        ? 'Top 20 Rachas identificadas — Tercios' 
-        : 'Top 20 Rachas identificadas — Rojos / Negros';
+        ? `Top Rachas identificadas — Tercios` 
+        : `Top Rachas identificadas — Rojos / Negros`;
         
     document.getElementById('top-signals-title').textContent = isTercios 
-        ? '🏆 Top 20 Señales Más Críticas — Tercios' 
-        : '🏆 Top 20 Señales Más Críticas — Rojos / Negros';
+        ? `🏆 Top Señales Críticas — Tercios` 
+        : `🏆 Top Señales Críticas — Rojos / Negros`;
 
     document.getElementById('breakdown-title').textContent = isTercios
         ? '📊 Desglose por Mesa — Tercios'
@@ -131,14 +147,15 @@ function processAndRender(history, colorHistory) {
     renderTableBreakdown('tbody-tables-tercios', history, 'max_delay');
     renderTableBreakdown('tbody-tables-colores', colorHistory, 'streak_count');
 
-    // --- Top 20 Señales Más Críticas (Tercios) ---
-    const top20 = (history || []).slice().sort((a, b) => b.max_delay - a.max_delay).slice(0, 20);
+    // --- Top N Señales Más Críticas (Tercios) ---
+    const topN = (history || []).slice().sort((a, b) => b.max_delay - a.max_delay).slice(0, currentTopLimit);
     const tbodyTop20 = document.getElementById('tbody-top20');
 
-    if (top20.length === 0) {
+    tbodyTop20.innerHTML = '';
+    if (topN.length === 0) {
         tbodyTop20.innerHTML = '<tr><td colspan="4" class="loading-td">No hay señales de tercios registradas aún.</td></tr>';
     } else {
-        top20.forEach((evt, index) => {
+        topN.forEach((evt, index) => {
             const zoneMap = {
                 "docena_1": "1ª Docena", "docena_2": "2ª Docena", "docena_3": "3ª Docena",
                 "columna_1": "Columna 1", "columna_2": "Columna 2", "columna_3": "Columna 3"
@@ -147,55 +164,83 @@ function processAndRender(history, colorHistory) {
             const end = evt.end_time ? evt.end_time : 'En progreso';
 
             const tr = document.createElement('tr');
+            tr.className = 'clickable-row';
             tr.innerHTML = `
                 <td><strong>${index + 1}. ${formatName(evt.table_name)}</strong></td>
                 <td>${zoneLabel}</td>
                 <td class="max-delay-col delay-extreme">${evt.max_delay} giros</td>
                 <td>${end}</td>
             `;
+            tr.addEventListener('click', () => {
+                openSignalDetail({
+                    type: 'tercios',
+                    table_name: evt.table_name,
+                    zone_name: evt.zone_name,
+                    zoneLabel: zoneLabel,
+                    max_delay: evt.max_delay,
+                    start_time: evt.start_time,
+                    end_time: evt.end_time
+                });
+            });
             tbodyTop20.appendChild(tr);
         });
     }
 
-    // --- Top 20 Señales Más Críticas (Colores) ---
-    const top20Color = (colorHistory || []).slice().sort((a, b) => b.streak_count - a.streak_count).slice(0, 20);
+    // --- Top N Señales Más Críticas (Colores) ---
+    const topNColor = (colorHistory || []).slice().sort((a, b) => b.streak_count - a.streak_count).slice(0, currentTopLimit);
     const tbodyTop20Color = document.getElementById('tbody-top20-color');
 
-    if (top20Color.length === 0) {
+    tbodyTop20Color.innerHTML = '';
+    if (topNColor.length === 0) {
         tbodyTop20Color.innerHTML = '<tr><td colspan="4" class="loading-td">No hay señales de rachas de color registradas aún.</td></tr>';
     } else {
-        top20Color.forEach((evt, index) => {
+        topNColor.forEach((evt, index) => {
             const isRed = evt.streak_color === 'Red';
             const emoji = isRed ? '🔴' : '⚫';
             const colorLabel = isRed ? 'Rojos' : 'Negros';
             const end = evt.end_time ? evt.end_time : 'En progreso';
 
             const tr = document.createElement('tr');
+            tr.className = 'clickable-row';
             tr.innerHTML = `
                 <td><strong>${index + 1}. ${formatName(evt.table_name)}</strong></td>
                 <td><span class="color-streak-badge ${isRed ? 'red' : 'black'}">${emoji} ${colorLabel}</span></td>
                 <td class="max-delay-col" style="color: ${isRed ? '#ff6b6b' : '#e0e0e0'}">${evt.streak_count} consecutivos</td>
                 <td>${end}</td>
             `;
+            tr.addEventListener('click', () => {
+                openSignalDetail({
+                    type: 'color',
+                    table_name: evt.table_name,
+                    streak_color: evt.streak_color,
+                    colorLabel: colorLabel,
+                    streak_count: evt.streak_count,
+                    start_time: evt.start_time,
+                    end_time: evt.end_time
+                });
+            });
             tbodyTop20Color.appendChild(tr);
         });
     }
 
     // --- Renderizar Gráficos (Chart.js) ---
-    renderCharts(top20, top20Color);
+    renderCharts(topN, topNColor);
 }
 
-function renderCharts(top20Tercios, top20Color) {
+function renderCharts(topNTercios, topNColor) {
     // defaults
     Chart.defaults.color = '#94a3b8'; // text-secondary
     Chart.defaults.font.family = "'Inter', sans-serif";
 
-    // Gráfico 1: Top 20 Picos — Tercios (rojo)
-    const ctxTercios = document.getElementById('chartTop20Tercios').getContext('2d');
-    const terciosLabels = top20Tercios.map((e, i) => `${i + 1}. ${formatName(e.table_name)}`);
-    const terciosData = top20Tercios.map(e => e.max_delay);
+    if (chartTerciosInstance) chartTerciosInstance.destroy();
+    if (chartColorInstance) chartColorInstance.destroy();
 
-    new Chart(ctxTercios, {
+    // Gráfico 1: Top N Picos — Tercios (rojo)
+    const ctxTercios = document.getElementById('chartTop20Tercios').getContext('2d');
+    const terciosLabels = topNTercios.map((e, i) => `${i + 1}. ${formatName(e.table_name)}`);
+    const terciosData = topNTercios.map(e => e.max_delay);
+
+    chartTerciosInstance = new Chart(ctxTercios, {
         type: 'line',
         data: {
             labels: terciosLabels.length > 0 ? terciosLabels : ['Sin datos'],
@@ -222,15 +267,15 @@ function renderCharts(top20Tercios, top20Color) {
         }
     });
 
-    // Gráfico 2: Top 20 Picos — Color (naranja)
+    // Gráfico 2: Top N Picos — Color (naranja)
     const ctxColor = document.getElementById('chartTop20Color').getContext('2d');
-    const colorLabels = top20Color.map((e, i) => {
+    const colorLabels = topNColor.map((e, i) => {
         const emoji = e.streak_color === 'Red' ? '🔴' : '⚫';
         return `${i + 1}. ${emoji} ${formatName(e.table_name)}`;
     });
-    const colorData = top20Color.map(e => e.streak_count);
+    const colorData = topNColor.map(e => e.streak_count);
 
-    new Chart(ctxColor, {
+    chartColorInstance = new Chart(ctxColor, {
         type: 'line',
         data: {
             labels: colorLabels.length > 0 ? colorLabels : ['Sin datos'],
@@ -256,6 +301,114 @@ function renderCharts(top20Tercios, top20Color) {
             }
         }
     });
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL — Detalle de Señal
+// ═══════════════════════════════════════════════════════
+
+function setupModal() {
+    const modal = document.getElementById('signal-modal');
+    const closeBtn = document.getElementById('modal-close-btn');
+
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') modal.classList.remove('active');
+    });
+}
+
+async function openSignalDetail(signal) {
+    const modal = document.getElementById('signal-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalBody = document.getElementById('modal-body');
+
+    // Configurar título y subtítulo según tipo
+    if (signal.type === 'tercios') {
+        modalTitle.textContent = `📋 ${formatName(signal.table_name)}`;
+        modalSubtitle.innerHTML = `
+            <strong>Zona:</strong> ${signal.zoneLabel} &nbsp;|&nbsp;
+            <strong>Pico:</strong> ${signal.max_delay} giros &nbsp;|&nbsp;
+            <strong>Inicio:</strong> ${signal.start_time || '—'} &nbsp;→&nbsp;
+            <strong>Fin:</strong> ${signal.end_time || 'En progreso'}
+        `;
+    } else {
+        const emoji = signal.streak_color === 'Red' ? '🔴' : '⚫';
+        modalTitle.textContent = `📋 ${formatName(signal.table_name)}`;
+        modalSubtitle.innerHTML = `
+            <strong>Racha:</strong> ${emoji} ${signal.streak_count} ${signal.colorLabel} &nbsp;|&nbsp;
+            <strong>Inicio:</strong> ${signal.start_time || '—'} &nbsp;→&nbsp;
+            <strong>Fin:</strong> ${signal.end_time || 'En progreso'}
+        `;
+    }
+
+    // Mostrar spinner
+    modalBody.innerHTML = '<div class="spinner-sm"></div>';
+    modal.classList.add('active');
+
+    // Fetch los datos
+    try {
+        const params = new URLSearchParams({
+            mesa: signal.table_name
+        });
+        
+        if (signal.start_time) params.set('start', signal.start_time);
+        if (signal.end_time) params.set('end', signal.end_time);
+        
+        // Usar pico para saber exactamente cuántas jugadas traer hacia atrás
+        if (signal.max_delay) params.set('pico', signal.max_delay);
+        else if (signal.streak_count) params.set('pico', signal.streak_count);
+
+        const res = await fetch(`/api/signal_detail?${params}`);
+        if (!res.ok) throw new Error('Error al obtener detalle');
+        const data = await res.json();
+
+        if (!data.plays || data.plays.length === 0) {
+            modalBody.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text-secondary)">No se encontraron jugadas en este rango de tiempo.</div>';
+            return;
+        }
+
+        // Construir tabla de jugadas
+        let html = `
+            <table class="plays-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Hora</th>
+                        <th>Número</th>
+                        <th>Color</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.plays.forEach((play, i) => {
+            const colorClass = play.color === 'Red' ? 'red' : (play.color === 'Black' ? 'black' : 'green');
+            const colorLabel = play.color === 'Red' ? 'Rojo' : (play.color === 'Black' ? 'Negro' : 'Verde');
+            const time = play.timestamp ? play.timestamp.split(' ')[1] || play.timestamp : '—';
+
+            html += `
+                <tr>
+                    <td style="color:var(--text-secondary)">${i + 1}</td>
+                    <td><span class="play-time">${time}</span></td>
+                    <td><span class="play-numero ${colorClass}">${play.numero}</span></td>
+                    <td>${colorLabel}</td>
+                </tr>
+            `;
+        });
+
+        html += '</tbody></table>';
+        modalBody.innerHTML = html;
+
+    } catch (err) {
+        console.error('Error fetching signal detail:', err);
+        modalBody.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--color-danger)">❌ Error al cargar el detalle de la señal.</div>';
+    }
 }
 
 function formatName(str) {

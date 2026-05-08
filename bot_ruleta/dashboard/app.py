@@ -33,6 +33,7 @@ else:
     DATA_DIR = os.path.join(base_dir, "data")
 
 app = Flask(__name__, static_url_path='', static_folder=static_dir)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Sin caché para archivos estáticos
 
 os.makedirs(DATA_DIR, exist_ok=True)
 DB_PATH = os.path.join(DATA_DIR, "ruleta.db")
@@ -292,6 +293,67 @@ def get_analisis_global():
             "threshold": threshold,
             "color_streak_threshold": color_threshold
         })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/signal_detail')
+def get_signal_detail():
+    """Devuelve las jugadas individuales que componen una señal específica."""
+    table_name = request.args.get('mesa')
+    start_time = request.args.get('start')
+    end_time = request.args.get('end')
+    pico = request.args.get('pico', type=int)
+    
+    if not table_name:
+        return jsonify({"error": "Falta parámetro mesa"}), 400
+    if not any(t["table_name"] == table_name for t in TABLES):
+        return jsonify({"error": "Tabla no válida"}), 400
+    
+    try:
+        conn = get_db_connection()
+        
+        if pico and pico > 0:
+            if end_time:
+                # La racha se rompió, así que traemos 'pico' jugadas + 1 (la que rompió la racha)
+                limit = pico + 1
+                cursor = conn.execute(
+                    f"SELECT numero, color, timestamp FROM {table_name} "
+                    f"WHERE timestamp <= ? ORDER BY id DESC LIMIT ?",
+                    (end_time, limit)
+                )
+            else:
+                # La racha está activa, así que la última jugada de la mesa pertenece a la racha
+                limit = pico
+                cursor = conn.execute(
+                    f"SELECT numero, color, timestamp FROM {table_name} "
+                    f"ORDER BY id DESC LIMIT ?",
+                    (limit,)
+                )
+            rows = cursor.fetchall()
+            rows.reverse()
+        else:
+            if not start_time:
+                return jsonify({"error": "Se requiere start_time si no hay pico"}), 400
+                
+            if end_time:
+                cursor = conn.execute(
+                    f"SELECT numero, color, timestamp FROM {table_name} "
+                    f"WHERE timestamp BETWEEN ? AND ? ORDER BY id ASC",
+                    (start_time, end_time)
+                )
+            else:
+                # Si no hay end_time (señal en progreso), traer desde start_time
+                cursor = conn.execute(
+                    f"SELECT numero, color, timestamp FROM {table_name} "
+                    f"WHERE timestamp >= ? ORDER BY id ASC LIMIT 50",
+                    (start_time,)
+                )
+            rows = cursor.fetchall()
+        conn.close()
+        
+        plays = [{"numero": r["numero"], "color": r["color"], "timestamp": r["timestamp"]} for r in rows]
+        return jsonify({"mesa": table_name, "plays": plays})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

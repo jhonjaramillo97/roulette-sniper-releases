@@ -9,6 +9,7 @@ let currentThreshold = 12; // Default
 let colorStreakThreshold = 5; // Default
 let filterSignalsOnly = false;
 let alertTimestamps = {}; // { table_name: timestamp } para ordenar
+let cachedTables = []; // Cached tables data for re-rendering
 
 // Inicialización
 document.addEventListener("DOMContentLoaded", () => {
@@ -46,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             // Re-evaluar el orden inmediatamente usando los datos cacheados
-            if (overviewData && overviewData.length > 0) {
-                updateCards(overviewData);
+            if (cachedTables.length > 0) {
+                updateCards(cachedTables);
             }
         });
     }
@@ -109,6 +110,7 @@ async function fetchOverview() {
         }
 
         renderGrid(data.tables);
+        cachedTables = data.tables; // Cache for filter re-render
 
         // --- LÓGICA DE PANTALLA DE CARGA ---
         // Verificar si los datos son "frescos" (al menos una mesa actualizada hace menos de 60s)
